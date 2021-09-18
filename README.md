@@ -1,13 +1,21 @@
 # Project setup localy
 
 To start the application locally please follow these steps.
+
 step 1
+
 Download repository zip file.
+
 step 2
+
 Unzip the file to your destination path on your local machine(example c:\<YOUR_PATH\<FOLDER_NAME>).
+
 step 3
+
 npm install
+
 step 4
+
 npm start
 
 ## Running backend and frontend locally
