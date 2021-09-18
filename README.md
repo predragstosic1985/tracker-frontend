@@ -22,6 +22,10 @@ npm start
 
 Download backend repository to your local machine from this link
 
+https://github.com/predragstosic1985/tracker-backend
+
 Reproduce the same steps from previous like for frontend setup
 
-Change base link path in Frontend application (React app) file proxy.json relative path src\proxy.json to localhost:5000
+Change base link path in Frontend application (React app) file proxy.json relative path src\proxy.json to
+
+http://localhost:5000/
