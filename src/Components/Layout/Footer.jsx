@@ -5,7 +5,7 @@ import Box from "@mui/material/Box";
 
 const Footer = (props) => {
   return (
-    <AppBar color="default" position="static" sx={{ top: "auto", bottom: 0 }}>
+    <AppBar color="default" position="fixed" sx={{ top: "auto", bottom: 0 }}>
       <Toolbar>
         <Box sx={{ flexGrow: 1 }} />
         Footer
