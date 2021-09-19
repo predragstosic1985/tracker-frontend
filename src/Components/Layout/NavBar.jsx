@@ -14,7 +14,7 @@ const NavBar = (props) => {
             color: "white",
           }}
         >
-          Nav bar
+          Tracker app
         </Typography>
       </Toolbar>
     </AppBar>

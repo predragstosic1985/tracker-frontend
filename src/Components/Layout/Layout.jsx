@@ -9,6 +9,7 @@ import ScrollTop from "./ScrollTop";
 import Footer from "./Footer";
 import Tracker from "../Tracker/Tracker";
 import ChartComponent from "../Chart/ChartComponent";
+import StepperComponent from "../Stepper/StepperComponent";
 
 const Layout = (props) => {
   return (
@@ -18,8 +19,9 @@ const Layout = (props) => {
 
       <Container>
         <Box sx={{ my: 2 }}>
-          <ChartComponent />
           <Tracker />
+          <StepperComponent />
+          <ChartComponent />
         </Box>
       </Container>
       <Footer />

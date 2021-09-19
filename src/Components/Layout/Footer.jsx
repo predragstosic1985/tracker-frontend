@@ -8,7 +8,7 @@ const Footer = (props) => {
     <AppBar color="default" position="fixed" sx={{ top: "auto", bottom: 0 }}>
       <Toolbar>
         <Box sx={{ flexGrow: 1 }} />
-        Footer
+        Predrag Stosic Sep, 2021
       </Toolbar>
     </AppBar>
   );
