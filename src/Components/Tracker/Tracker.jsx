@@ -13,6 +13,7 @@ import RepeatIcon from "@mui/icons-material/Repeat";
 import Typography from "@mui/material/Typography";
 import AddIcon from "@mui/icons-material/Add";
 import Button from "@mui/material/Button";
+import Grid from "@mui/material/Grid";
 import CreateModal from "../Modals/CreateModal";
 
 const Tracker = (props) => {
@@ -22,8 +23,22 @@ const Tracker = (props) => {
     setOpenModal(true);
   };
   return (
-    <>
+    <Grid
+      container
+      spacing={2}
+      xs={16}
+      sx={{
+        border: "1px solid #73c2fb",
+        width: "30rem",
+        marginRight: "auto",
+        marginLeft: "auto",
+        marginTop: "5rem",
+      }}
+    >
       <Timeline position="alternate">
+        <Typography variant="h6" component="span" align="center">
+          Check your latest
+        </Typography>
         <TimelineItem>
           <TimelineOppositeContent
             sx={{ m: "auto 0" }}
@@ -34,7 +49,6 @@ const Tracker = (props) => {
             9:30 am
           </TimelineOppositeContent>
           <TimelineSeparator>
-            {/* <TimelineConnector /> */}
             <TimelineDot>
               <FastfoodIcon />
             </TimelineDot>
@@ -113,13 +127,8 @@ const Tracker = (props) => {
           Add new
         </Button>
       </Timeline>
-
-      <CreateModal
-        openModal={openModal}
-        setOpenModal={setOpenModal}
-        // loadingOnPost={loadingOnPost}
-      />
-    </>
+      <CreateModal openModal={openModal} setOpenModal={setOpenModal} />
+    </Grid>
   );
 };
 export default Tracker;

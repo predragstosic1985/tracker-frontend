@@ -2,7 +2,6 @@ import { createTheme, responsiveFontSizes } from "@mui/material/styles";
 
 // colors
 const primary = "#4285F4";
-// const primary = "#b3294e"; tamna crvena
 const secondary = "#73c2fb";
 const black = "#343a40";
 const darkBlack = "rgb(36, 40, 44)";

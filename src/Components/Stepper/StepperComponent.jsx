@@ -5,6 +5,7 @@ import Step from "@mui/material/Step";
 import StepButton from "@mui/material/StepButton";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import Grid from "@mui/material/Grid";
 
 const steps = [
   "Select campaign settings",
@@ -63,7 +64,25 @@ const StepperComponent = () => {
   };
 
   return (
-    <Box sx={{ width: "100%", marginTop: "3rem", marginBottom: "3rem" }}>
+    <Box
+      sx={{
+        width: "90%",
+        marginTop: "3rem",
+        marginBottom: "3rem",
+        marginRight: "auto",
+        marginLeft: "auto",
+      }}
+    >
+      <Typography
+        variant="h6"
+        gutterBottom={true}
+        sx={{
+          marginTop: "1rem",
+          marginBottom: "1rem",
+        }}
+      >
+        All results
+      </Typography>
       <Stepper nonLinear activeStep={activeStep}>
         {steps.map((label, index) => (
           <Step key={label} completed={completed[index]}>
