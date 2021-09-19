@@ -8,8 +8,8 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import ScrollTop from "./ScrollTop";
 import Footer from "./Footer";
 import Tracker from "../Tracker/Tracker";
-import ChartComponent from "../Chart/ChartComponent";
-import StepperComponent from "../Stepper/StepperComponent";
+// import ChartComponent from "../Chart/ChartComponent";
+// import StepperComponent from "../Stepper/StepperComponent";
 
 const Layout = (props) => {
   return (

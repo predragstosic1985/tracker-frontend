@@ -70,7 +70,7 @@ const CreateForm = ({ setOpenModal }) => {
           Cancel
         </Button>
         <Button
-          onClick={handleClose}
+          onClick={onSubmit}
           variant="contained"
           color="primary"
           startIcon={<CheckIcon />}
