@@ -15,9 +15,14 @@ import AddIcon from "@mui/icons-material/Add";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import CreateModal from "../Modals/CreateModal";
+import TrackerItem from "./TrackerItem";
+import EditTrackerItem from "./EditTrackerItem";
+import DeleteModal from "../Modals/DeleteModal";
 
 const Tracker = (props) => {
   const [openModal, setOpenModal] = useState(false);
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
+  const [editMode, setEditMode] = useState(false);
   const handleAddNewClick = (e, data) => {
     console.log("hit", e, data);
     setOpenModal(true);
@@ -29,7 +34,7 @@ const Tracker = (props) => {
       xs={16}
       sx={{
         border: "1px solid #73c2fb",
-        width: "30rem",
+        width: "60rem",
         marginRight: "auto",
         marginLeft: "auto",
         marginTop: "5rem",
@@ -55,10 +60,19 @@ const Tracker = (props) => {
             <TimelineConnector />
           </TimelineSeparator>
           <TimelineContent sx={{ py: "12px", px: 2 }}>
-            <Typography variant="h6" component="span">
+            {editMode ? (
+              <EditTrackerItem setEditMode={setEditMode} />
+            ) : (
+              <TrackerItem
+                setEditMode={setEditMode}
+                setOpenDeleteModal={setOpenDeleteModal}
+              />
+            )}
+
+            {/* <Typography variant="h6" component="span">
               Eat
             </Typography>
-            <Typography>Because you need strength</Typography>
+            <Typography>Because you need strength</Typography> */}
           </TimelineContent>
         </TimelineItem>
         <TimelineItem>
@@ -117,6 +131,7 @@ const Tracker = (props) => {
           onClick={handleAddNewClick}
           variant="contained"
           startIcon={<AddIcon />}
+          disabled={editMode}
           sx={{
             width: "8rem",
             marginLeft: "auto",
@@ -128,6 +143,10 @@ const Tracker = (props) => {
         </Button>
       </Timeline>
       <CreateModal openModal={openModal} setOpenModal={setOpenModal} />
+      <DeleteModal
+        openDeleteModal={openDeleteModal}
+        setOpenDeleteModal={setOpenDeleteModal}
+      />
     </Grid>
   );
 };

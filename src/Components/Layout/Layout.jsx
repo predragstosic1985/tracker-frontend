@@ -20,8 +20,8 @@ const Layout = (props) => {
       <Container>
         <Box sx={{ my: 2 }}>
           <Tracker />
-          <StepperComponent />
-          <ChartComponent />
+          {/* <StepperComponent />
+          <ChartComponent /> */}
         </Box>
       </Container>
       <Footer />
