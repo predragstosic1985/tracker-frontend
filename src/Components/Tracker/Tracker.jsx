@@ -18,6 +18,7 @@ import CreateModal from "../Modals/CreateModal";
 import TrackerItem from "./TrackerItem";
 import EditTrackerItem from "./EditTrackerItem";
 import DeleteModal from "../Modals/DeleteModal";
+import { getData } from "../../services/services";
 
 const Tracker = (props) => {
   const [openModal, setOpenModal] = useState(false);
@@ -27,6 +28,17 @@ const Tracker = (props) => {
     console.log("hit", e, data);
     setOpenModal(true);
   };
+  const initFetch = async () => {
+    try {
+      const response = getData();
+      if (response) {
+        console.log(response);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  initFetch();
   return (
     <Grid
       container
