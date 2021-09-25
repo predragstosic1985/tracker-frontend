@@ -7,9 +7,6 @@ import TimelineContent from "@mui/lab/TimelineContent";
 import TimelineOppositeContent from "@mui/lab/TimelineOppositeContent";
 import TimelineDot from "@mui/lab/TimelineDot";
 import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
-import LaptopMacIcon from "@mui/icons-material/LaptopMac";
-import HotelIcon from "@mui/icons-material/Hotel";
-import RepeatIcon from "@mui/icons-material/Repeat";
 import Typography from "@mui/material/Typography";
 import AddIcon from "@mui/icons-material/Add";
 import Button from "@mui/material/Button";
@@ -89,7 +86,10 @@ const TrackerForm = ({ userDeatils, measurements }) => {
               </TimelineSeparator>
               <TimelineContent sx={{ py: "12px", px: 2 }}>
                 {editMode ? (
-                  <EditTrackerItem setEditMode={setEditMode} />
+                  <EditTrackerItem
+                    setEditMode={setEditMode}
+                    date={measurements[index]["date"]}
+                  />
                 ) : (
                   <TrackerItem
                     weight={measurements[index]["weight"]}

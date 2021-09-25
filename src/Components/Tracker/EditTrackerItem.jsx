@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -12,11 +12,17 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import InputLabel from "@mui/material/InputLabel";
 import InputAdornment from "@mui/material/InputAdornment";
 import FormControl from "@mui/material/FormControl";
-import Visibility from "@mui/icons-material/Visibility";
-import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import TextField from "@mui/material/TextField";
+import DateTimePicker from "@mui/lab/DateTimePicker";
 
-const TrackerItem = ({ setEditMode }) => {
+const TrackerItem = ({ setEditMode, date }) => {
   // milliseconds = date.getTime();
+  const [value, setValue] = useState(new Date(date));
+
+  const handleChange = (newValue) => {
+    setValue(newValue);
+  };
+
   return (
     <Card>
       <CardContent>
@@ -25,24 +31,30 @@ const TrackerItem = ({ setEditMode }) => {
           component="form"
           autoComplete="off"
         >
-          <FormControl sx={{ m: 1 }} variant="outlined" size="small">
-            <InputLabel htmlFor="outlined-adornment-password">
-              Password
-            </InputLabel>
+          <FormControl sx={{ m: 1 }} variant="outlined" size="small" required>
+            <InputLabel htmlFor="outlined-adornment-weight">weight</InputLabel>
             <OutlinedInput
               id="outlined-adornment-password"
-              type={"text"}
+              type={"number"}
               endAdornment={
                 <InputAdornment position="end">
                   <IconButton
                     aria-label="toggle password visibility"
                     edge="end"
                   >
-                    {true ? <VisibilityOff /> : <Visibility />}
+                    kg
                   </IconButton>
                 </InputAdornment>
               }
               label="Password"
+            />
+          </FormControl>
+          <FormControl sx={{ m: 1 }} variant="outlined" size="small">
+            <DateTimePicker
+              label="Select Date and Time"
+              value={value}
+              onChange={handleChange}
+              renderInput={(params) => <TextField {...params} />}
             />
           </FormControl>
         </Box>
