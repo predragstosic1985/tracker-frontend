@@ -20,6 +20,8 @@ const TrackerForm = ({
   saveUpdateMeasurement,
   setEditMode,
   editMode,
+  miniLoader,
+  setMiniLoader,
 }) => {
   /* eslint-disable no-unused-vars */
   const [selectedItem, setSelectedItem] = useState(null);
@@ -104,6 +106,8 @@ const TrackerForm = ({
                     weight={measurements[index]["weight"]}
                     saveUpdateMeasurement={saveUpdateMeasurement}
                     index={index}
+                    miniLoader={miniLoader}
+                    setMiniLoader={setMiniLoader}
                   />
                 ) : (
                   <TrackerItem

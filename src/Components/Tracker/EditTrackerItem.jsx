@@ -13,6 +13,8 @@ import InputAdornment from "@mui/material/InputAdornment";
 import FormControl from "@mui/material/FormControl";
 import TextField from "@mui/material/TextField";
 import DateTimePicker from "@mui/lab/DateTimePicker";
+import Skeleton from "@mui/material/Skeleton";
+import Stack from "@mui/material/Stack";
 
 const TrackerItem = ({
   setEditMode,
@@ -20,6 +22,8 @@ const TrackerItem = ({
   weight,
   saveUpdateMeasurement,
   index,
+  miniLoader,
+  setMiniLoader,
 }) => {
   // milliseconds = date.getTime();
   const initObj = {
@@ -49,6 +53,7 @@ const TrackerItem = ({
   };
 
   const onSaveClick = () => {
+    setMiniLoader(true);
     const repackForSend = {
       ...updateMeasurement,
       date: updateMeasurement.date.getTime(),
@@ -58,59 +63,79 @@ const TrackerItem = ({
   };
 
   return (
-    <Card>
-      <CardContent>
-        <Box
-          sx={{ display: "flex", flexWrap: "wrap" }}
-          component="form"
-          autoComplete="off"
-        >
-          <FormControl sx={{ m: 1 }} variant="outlined" size="small" fullWidth>
-            <OutlinedInput
-              id="outlined-adornment-weight"
-              type={"number"}
-              value={updateMeasurement.weight}
-              onChange={handleOnChange}
-              endAdornment={
-                <InputAdornment position="end">
-                  <IconButton aria-label="weight" edge="end">
-                    kg
-                  </IconButton>
-                </InputAdornment>
-              }
-            />
-          </FormControl>
-          <FormControl sx={{ m: 1 }} variant="outlined" size="small" fullWidth>
-            <DateTimePicker
-              label="Select Date and Time"
-              value={updateMeasurement.date}
-              onChange={handleChangeDate}
-              renderInput={(params) => <TextField {...params} />}
-            />
-          </FormControl>
-        </Box>
-      </CardContent>
-      <CardActions>
-        <ButtonGroup sx={{ float: "right", marginLeft: "auto" }}>
-          <Button
-            onClick={() => setEditMode(false)}
-            color="inherit"
-            variant="contained"
-            startIcon={<CancelIcon />}
-          >
-            Cancel
-          </Button>
-          <Button
-            onClick={onSaveClick}
-            variant="contained"
-            color="primary"
-            startIcon={<CheckIcon />}
-          >
-            Save
-          </Button>
-        </ButtonGroup>
-      </CardActions>
-    </Card>
+    <>
+      {miniLoader ? (
+        <Stack spacing={1}>
+          <Skeleton variant="text" />
+          <Skeleton variant="circular" width={40} height={40} />
+          <Skeleton variant="rectangular" width={"100%"} height={100} />
+        </Stack>
+      ) : (
+        <Card>
+          <CardContent>
+            <Box
+              sx={{ display: "flex", flexWrap: "wrap" }}
+              component="form"
+              autoComplete="off"
+            >
+              <FormControl
+                sx={{ m: 1 }}
+                variant="outlined"
+                size="small"
+                fullWidth
+              >
+                <OutlinedInput
+                  id="outlined-adornment-weight"
+                  type={"number"}
+                  value={updateMeasurement.weight}
+                  onChange={handleOnChange}
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton aria-label="weight" edge="end">
+                        kg
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                />
+              </FormControl>
+              <FormControl
+                sx={{ m: 1 }}
+                variant="outlined"
+                size="small"
+                fullWidth
+              >
+                <DateTimePicker
+                  label="Select Date and Time"
+                  value={updateMeasurement.date}
+                  onChange={handleChangeDate}
+                  renderInput={(params) => <TextField {...params} />}
+                />
+              </FormControl>
+            </Box>
+          </CardContent>
+          <CardActions>
+            <ButtonGroup sx={{ float: "right", marginLeft: "auto" }}>
+              <Button
+                onClick={() => setEditMode(false)}
+                color="inherit"
+                variant="contained"
+                startIcon={<CancelIcon />}
+              >
+                Cancel
+              </Button>
+              <Button
+                onClick={onSaveClick}
+                variant="contained"
+                color="primary"
+                startIcon={<CheckIcon />}
+              >
+                Save
+              </Button>
+            </ButtonGroup>
+          </CardActions>
+        </Card>
+      )}
+    </>
   );
 };
 export default TrackerItem;

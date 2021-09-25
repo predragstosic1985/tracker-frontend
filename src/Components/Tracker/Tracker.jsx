@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
+import Skeleton from "@mui/material/Skeleton";
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
+import Stack from "@mui/material/Stack";
 import CreateModal from "../Modals/CreateModal";
 import TrackerForm from "./TrackerForm";
 import TrackerUser from "./TrackerUser";
@@ -8,6 +12,7 @@ import DeleteModal from "../Modals/DeleteModal";
 import Layout from "../Layout/Layout";
 import { getTrackerData, updateMeasurement } from "../../services/services";
 import useFetchier from "../../hooks/Fetcher";
+
 // import TrackerItem from "./TrackerItem";
 // import EditTrackerItem from "./EditTrackerItem";
 // import ChartComponent from "../Chart/ChartComponent";
@@ -19,6 +24,7 @@ const Tracker = (props) => {
     useFetchier(getTrackerData);
 
   const [openModal, setOpenModal] = useState(false);
+  const [miniLoader, setMiniLoader] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [userDeatils, setUserDetails] = useState(null);
@@ -47,6 +53,7 @@ const Tracker = (props) => {
     } finally {
       reFetchTrackerData();
       setEditMode(false);
+      setMiniLoader(false);
     }
   };
 
@@ -55,6 +62,12 @@ const Tracker = (props) => {
       <Layout
         content={
           <Grid container spacing={1} direction="row">
+            <Backdrop
+              sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+              open={loadingTrackerData}
+            >
+              <CircularProgress color="inherit" />
+            </Backdrop>
             <Box
               component={Grid}
               item
@@ -64,13 +77,32 @@ const Tracker = (props) => {
               xs={8}
               display={{ lg: "block", md: "block", sm: "block", xs: "block" }}
             >
-              <TrackerForm
-                userDeatils={userDeatils}
-                measurements={measurements}
-                saveUpdateMeasurement={saveUpdateMeasurement}
-                setEditMode={setEditMode}
-                editMode={editMode}
-              />
+              {loadingTrackerData ? (
+                <Stack
+                  spacing={1}
+                  sx={{ margin: "auto" }}
+                  height={"70vh"}
+                  width={"50vw"}
+                >
+                  <Skeleton variant="text" />
+                  <Skeleton variant="circular" width={40} height={40} />
+                  <Skeleton
+                    variant="rectangular"
+                    height={"70vh"}
+                    width={"50vw"}
+                  />
+                </Stack>
+              ) : (
+                <TrackerForm
+                  userDeatils={userDeatils}
+                  measurements={measurements}
+                  saveUpdateMeasurement={saveUpdateMeasurement}
+                  setEditMode={setEditMode}
+                  editMode={editMode}
+                  miniLoader={miniLoader}
+                  setMiniLoader={setMiniLoader}
+                />
+              )}
             </Box>
             <Grid
               component={Box}
