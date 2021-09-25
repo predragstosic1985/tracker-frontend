@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Skeleton from "@mui/material/Skeleton";
+import Stack from "@mui/material/Stack";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
-import Stack from "@mui/material/Stack";
 import CreateModal from "../Modals/CreateModal";
 import TrackerForm from "./TrackerForm";
 import TrackerUser from "./TrackerUser";
@@ -173,7 +173,10 @@ const Tracker = (props) => {
               xs={4}
               display={{ lg: "block", md: "block", sm: "block", xs: "none" }}
             >
-              <TrackerUser userDeatils={userDeatils} />
+              <TrackerUser
+                userDeatils={userDeatils}
+                loadingTrackerData={loadingTrackerData}
+              />
             </Grid>
           </Grid>
         }

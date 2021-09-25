@@ -9,8 +9,10 @@ import ListItem from "@mui/material/ListItem";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import ListItemText from "@mui/material/ListItemText";
 import Avatar from "@mui/material/Avatar";
+import Skeleton from "@mui/material/Skeleton";
+import Stack from "@mui/material/Stack";
 
-const TrackerUser = ({ userDeatils }) => {
+const TrackerUser = ({ userDeatils, loadingTrackerData }) => {
   const fields = [
     {
       fieldName: "Name",
@@ -30,6 +32,13 @@ const TrackerUser = ({ userDeatils }) => {
     {
       fieldName: "Username",
       propName: "username",
+      inMainTable: true,
+      editable: true,
+      inputType: "text",
+    },
+    {
+      fieldName: "Password",
+      propName: "password",
       inMainTable: true,
       editable: true,
       inputType: "text",
@@ -86,33 +95,47 @@ const TrackerUser = ({ userDeatils }) => {
     );
   };
   return (
-    <Grid
-      sx={{
-        marginTop: "1rem",
-        bgcolor: "#f5f5f5",
-        color: "#e4e6e7",
-      }}
-    >
-      <Header />
-
-      {userDeatils ? (
-        fields.map(({ fieldName, propName }, index) => (
-          <Box
-            key={index}
-            sx={{
-              display: "grid",
-              gap: 2,
-              gridTemplateColumns: "repeat(2, 1fr)",
-            }}
-          >
-            <Item sx={{ color: "#009fdf" }}>{fieldName}</Item>
-            <Item sx={{ color: "#9a9797" }}> {userDeatils[propName]}</Item>
-          </Box>
-        ))
+    <>
+      {loadingTrackerData ? (
+        <Stack
+          spacing={1}
+          sx={{ margin: "auto" }}
+          height={"70vh"}
+          width={"50vw"}
+        >
+          <Skeleton variant="text" width={"30vw"} />
+          <Skeleton variant="circular" width={40} height={40} />
+          <Skeleton variant="rectangular" height={"20vh"} width={"30vw"} />
+        </Stack>
       ) : (
-        <Box />
+        <Grid
+          sx={{
+            marginTop: "1rem",
+            bgcolor: "#f5f5f5",
+            color: "#e4e6e7",
+          }}
+        >
+          <Header />
+          {userDeatils ? (
+            fields.map(({ fieldName, propName }, index) => (
+              <Box
+                key={index}
+                sx={{
+                  display: "grid",
+                  gap: 2,
+                  gridTemplateColumns: "repeat(2, 1fr)",
+                }}
+              >
+                <Item sx={{ color: "#009fdf" }}>{fieldName}</Item>
+                <Item sx={{ color: "#9a9797" }}> {userDeatils[propName]}</Item>
+              </Box>
+            ))
+          ) : (
+            <Box />
+          )}
+        </Grid>
       )}
-    </Grid>
+    </>
   );
 };
 export default TrackerUser;
