@@ -15,6 +15,7 @@ import TextField from "@mui/material/TextField";
 import DateTimePicker from "@mui/lab/DateTimePicker";
 import Skeleton from "@mui/material/Skeleton";
 import Stack from "@mui/material/Stack";
+import { isEmpty } from "lodash";
 
 const TrackerItem = ({
   setEditMode,
@@ -33,6 +34,17 @@ const TrackerItem = ({
   };
 
   const [updateMeasurement, setUpdateMeasurement] = useState(initObj);
+  const [inputsError, setInputsError] = useState({});
+
+  useEffect(() => {
+    const errors = { ...inputsError };
+    Object.keys(errors).forEach((propName) => {
+      if (!isEmpty(updateMeasurement[propName])) {
+        delete errors[propName];
+      }
+    });
+    setInputsError(errors);
+  }, [updateMeasurement]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (date && weight) {
@@ -52,7 +64,19 @@ const TrackerItem = ({
     setUpdateMeasurement({ ...updateMeasurement, weight: target.value });
   };
 
-  const onSaveClick = () => {
+  const onSubmit = () => {
+    const errors = {};
+    Object.keys(updateMeasurement).forEach((propName) => {
+      if (isEmpty(updateMeasurement[propName])) {
+        if (propName === "weight") {
+          errors[propName] = { content: "Please add a value" };
+        }
+      }
+    });
+    isEmpty(errors) ? onSave(updateMeasurement) : setInputsError(errors);
+  };
+
+  const onSave = () => {
     setMiniLoader(true);
     const repackForSend = {
       ...updateMeasurement,
@@ -88,6 +112,7 @@ const TrackerItem = ({
                   id="outlined-adornment-weight"
                   type={"number"}
                   value={updateMeasurement.weight}
+                  error={!!inputsError.weight}
                   onChange={handleOnChange}
                   endAdornment={
                     <InputAdornment position="end">
@@ -124,7 +149,7 @@ const TrackerItem = ({
                 Cancel
               </Button>
               <Button
-                onClick={onSaveClick}
+                onClick={onSubmit}
                 variant="contained"
                 color="primary"
                 startIcon={<CheckIcon />}

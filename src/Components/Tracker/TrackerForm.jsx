@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Timeline from "@mui/lab/Timeline";
 import TimelineItem from "@mui/lab/TimelineItem";
 import TimelineSeparator from "@mui/lab/TimelineSeparator";
@@ -22,15 +22,13 @@ const TrackerForm = ({
   editMode,
   miniLoader,
   setMiniLoader,
+  setOpenDeleteModal,
+  handleDelteClick,
+  setSelectedItem,
+  selectedItem,
+  handleAddNewClick,
 }) => {
   /* eslint-disable no-unused-vars */
-  const [selectedItem, setSelectedItem] = useState(null);
-  const [openModal, setOpenModal] = useState(false);
-  const [openDeleteModal, setOpenDeleteModal] = useState(false);
-
-  const handleAddNewClick = (e, data) => {
-    setOpenModal(true);
-  };
 
   const fields = [
     {
@@ -81,6 +79,21 @@ const TrackerForm = ({
         <Typography variant="h6" component="span" align="center">
           Welcome {userDeatils ? userDeatils.firstName : ""}
         </Typography>
+        <Button
+          onClick={handleAddNewClick}
+          variant="contained"
+          startIcon={<AddIcon />}
+          disabled={editMode}
+          sx={{
+            width: "8rem",
+            marginLeft: "auto",
+            marginRight: "auto",
+            marginTop: "1rem",
+            marginBottom: "1rem",
+          }}
+        >
+          Add new
+        </Button>
         {measurements ? (
           measurements.map((item, index) => (
             <TimelineItem key={index}>
@@ -115,6 +128,7 @@ const TrackerForm = ({
                     date={dateFormater(measurements[index]["date"])}
                     handleEditMode={handleEditMode}
                     setOpenDeleteModal={setOpenDeleteModal}
+                    handleDelteClick={handleDelteClick}
                     index={index}
                   />
                 )}
@@ -124,21 +138,6 @@ const TrackerForm = ({
         ) : (
           <div />
         )}
-
-        <Button
-          onClick={handleAddNewClick}
-          variant="contained"
-          startIcon={<AddIcon />}
-          disabled={editMode}
-          sx={{
-            width: "8rem",
-            marginLeft: "auto",
-            marginRight: "auto",
-            marginTop: "1rem",
-          }}
-        >
-          Add new
-        </Button>
       </Timeline>
     </>
   );

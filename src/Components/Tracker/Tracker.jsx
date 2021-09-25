@@ -12,6 +12,7 @@ import DeleteModal from "../Modals/DeleteModal";
 import Layout from "../Layout/Layout";
 import { getTrackerData, updateMeasurement } from "../../services/services";
 import useFetchier from "../../hooks/Fetcher";
+import { sortBy } from "lodash";
 
 // import TrackerItem from "./TrackerItem";
 // import EditTrackerItem from "./EditTrackerItem";
@@ -24,6 +25,7 @@ const Tracker = (props) => {
     useFetchier(getTrackerData);
 
   const [openModal, setOpenModal] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
   const [miniLoader, setMiniLoader] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [editMode, setEditMode] = useState(false);
@@ -37,14 +39,27 @@ const Tracker = (props) => {
   useEffect(() => {
     if (trackerData) {
       setUserDetails(trackerData);
-      setMeasurements(trackerData.measurements);
+
+      const sortedData = sortBy(trackerData.measurements, function (dateObj) {
+        return new Date(dateObj.date);
+      }).reverse();
+      setMeasurements(sortedData);
     }
   }, [trackerData]); // eslint-disable-line react-hooks/exhaustive-deps
 
+  const handleDelteClick = (id) => {
+    setSelectedItem(id);
+    setOpenDeleteModal(true);
+  };
+
   const saveUpdateMeasurement = async (newValues) => {
     measurements[newValues.id] = newValues;
+    const prepare = {
+      ...userDeatils,
+      measurements: measurements,
+    };
     try {
-      const response = await updateMeasurement(userDeatils.docID, userDeatils);
+      const response = await updateMeasurement(userDeatils.docID, prepare);
       if (response) {
         console.log(response);
       }
@@ -54,6 +69,46 @@ const Tracker = (props) => {
       reFetchTrackerData();
       setEditMode(false);
       setMiniLoader(false);
+    }
+  };
+
+  const deleteUpdateMeasurement = async () => {
+    measurements.splice(selectedItem, 1);
+    const prepare = {
+      ...userDeatils,
+      measurements: measurements,
+    };
+    try {
+      const response = await updateMeasurement(userDeatils.docID, prepare);
+      if (response) {
+        console.log(response);
+      }
+    } catch (e) {
+      console.error(e);
+    } finally {
+      reFetchTrackerData();
+      setEditMode(false);
+      setOpenDeleteModal(false);
+    }
+  };
+
+  const createMeasurement = async (newValues) => {
+    measurements.push(newValues);
+    const prepare = {
+      ...userDeatils,
+      measurements: measurements,
+    };
+    try {
+      const response = await updateMeasurement(userDeatils.docID, prepare);
+      if (response) {
+        console.log(response);
+      }
+    } catch (e) {
+      console.error(e);
+    } finally {
+      reFetchTrackerData();
+      setEditMode(false);
+      setOpenModal(false);
     }
   };
 
@@ -101,6 +156,11 @@ const Tracker = (props) => {
                   editMode={editMode}
                   miniLoader={miniLoader}
                   setMiniLoader={setMiniLoader}
+                  setOpenDeleteModal={setOpenDeleteModal}
+                  handleDelteClick={handleDelteClick}
+                  setSelectedItem={setSelectedItem}
+                  selectedItem={selectedItem}
+                  handleAddNewClick={handleAddNewClick}
                 />
               )}
             </Box>
@@ -118,10 +178,15 @@ const Tracker = (props) => {
           </Grid>
         }
       />
-      <CreateModal openModal={openModal} setOpenModal={setOpenModal} />
+      <CreateModal
+        openModal={openModal}
+        setOpenModal={setOpenModal}
+        createMeasurement={createMeasurement}
+      />
       <DeleteModal
         openDeleteModal={openDeleteModal}
         setOpenDeleteModal={setOpenDeleteModal}
+        deleteUpdateMeasurement={deleteUpdateMeasurement}
       />
     </>
   );

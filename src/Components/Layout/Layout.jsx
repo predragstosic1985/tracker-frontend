@@ -4,7 +4,6 @@ import Toolbar from "@mui/material/Toolbar";
 import Grid from "@mui/material/Grid";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import ScrollTop from "./ScrollTop";
-import Footer from "./Footer";
 import { StyledFab } from "../../StyledComponents/Button.styled";
 
 const Layout = (props) => {
@@ -32,7 +31,6 @@ const Layout = (props) => {
       >
         {content}
       </Grid>
-      <Footer />
       <ScrollTop {...props}>
         <StyledFab
           configuration={configuration}

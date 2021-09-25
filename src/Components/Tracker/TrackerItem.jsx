@@ -9,10 +9,10 @@ import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 
 const TrackerItem = ({
   handleEditMode,
-  setOpenDeleteModal,
   weight,
   date,
   index,
+  handleDelteClick,
 }) => {
   return (
     <Card sx={{ height: "12rem" }}>
@@ -32,7 +32,7 @@ const TrackerItem = ({
           <IconButton
             color="error"
             aria-label="delete"
-            onClick={() => setOpenDeleteModal(true)}
+            onClick={() => handleDelteClick(index)}
           >
             <DeleteOutlineIcon />
           </IconButton>

@@ -7,7 +7,11 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import Button from "@mui/material/Button";
 
-const DeleteModal = ({ openDeleteModal, setOpenDeleteModal }) => {
+const DeleteModal = ({
+  openDeleteModal,
+  setOpenDeleteModal,
+  deleteUpdateMeasurement,
+}) => {
   return (
     <Dialog open={openDeleteModal} aria-labelledby="draggable-dialog-title">
       <DialogContent>
@@ -24,7 +28,7 @@ const DeleteModal = ({ openDeleteModal, setOpenDeleteModal }) => {
             No
           </Button>
           <Button
-            onClick={() => setOpenDeleteModal(false)}
+            onClick={deleteUpdateMeasurement}
             variant="contained"
             color="primary"
             startIcon={<CheckIcon />}
