@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Typography from "@mui/material/Typography";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -7,19 +7,15 @@ import IconButton from "@mui/material/IconButton";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 
-const TrackerItem = ({ setEditMode, setOpenDeleteModal }) => {
+const TrackerItem = ({ setEditMode, setOpenDeleteModal, weight, date }) => {
   return (
     <Card>
       <CardContent>
         <Typography variant="h6" component="span">
-          Eat
+          {weight}kg
         </Typography>
         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-          Word of the Day
-        </Typography>
-        <Typography variant="body2">
-          well meaning and kindly.
-          {'"a benevolent smile"'}
+          {date}
         </Typography>
       </CardContent>
       <CardActions>

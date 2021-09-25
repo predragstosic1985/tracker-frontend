@@ -15,8 +15,9 @@ import AddIcon from "@mui/icons-material/Add";
 import Button from "@mui/material/Button";
 import TrackerItem from "./TrackerItem";
 import EditTrackerItem from "./EditTrackerItem";
+import moment from "moment";
 
-const TrackerForm = ({ userDeatils }) => {
+const TrackerForm = ({ userDeatils, measurements }) => {
   /* eslint-disable no-unused-vars */
   const [openModal, setOpenModal] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
@@ -25,95 +26,85 @@ const TrackerForm = ({ userDeatils }) => {
     setOpenModal(true);
   };
 
+  const fields = [
+    {
+      fieldName: "weight",
+      propName: "weight",
+      inMainTable: true,
+      editable: true,
+      inputType: "text",
+      required: true,
+    },
+    {
+      fieldName: "date",
+      propName: "date",
+      inMainTable: true,
+      editable: true,
+      inputType: "text",
+    },
+  ];
+
+  // format time
+  const timeFormater = (dateToFormat) => {
+    let dateFormated = "";
+    if (dateToFormat) {
+      const dateCreate = new Date(dateToFormat);
+      dateFormated = dateCreate.toLocaleTimeString();
+    }
+    return dateFormated;
+  };
+
+  // format date
+  const dateFormater = (dateToFormat) => {
+    let dateFormated = "";
+    if (dateToFormat) {
+      const dateCreate = new Date(dateToFormat);
+      dateFormated = moment(dateCreate).format("Do MMMM YYYY");
+    }
+    return dateFormated;
+  };
+
   return (
     <>
       <Timeline position="alternate" sx={{ bgcolor: "#f5f5f5" }}>
         <Typography variant="h6" component="span" align="center">
           Welcome {userDeatils ? userDeatils.firstName : ""}
         </Typography>
-        <TimelineItem>
-          <TimelineOppositeContent
-            sx={{ m: "auto 0" }}
-            align="right"
-            variant="body2"
-            color="text.secondary"
-          >
-            9:30 am
-          </TimelineOppositeContent>
-          <TimelineSeparator>
-            <TimelineDot>
-              <FitnessCenterIcon />
-            </TimelineDot>
-            <TimelineConnector />
-          </TimelineSeparator>
-          <TimelineContent sx={{ py: "12px", px: 2 }}>
-            {editMode ? (
-              <EditTrackerItem setEditMode={setEditMode} />
-            ) : (
-              <TrackerItem
-                setEditMode={setEditMode}
-                setOpenDeleteModal={setOpenDeleteModal}
-              />
-            )}
+        {measurements ? (
+          measurements.map((item, index) => (
+            <TimelineItem key={index}>
+              <TimelineOppositeContent
+                sx={{ m: "auto 0" }}
+                align="right"
+                variant="body2"
+                color="text.secondary"
+              >
+                {timeFormater(measurements[index]["date"])}
+              </TimelineOppositeContent>
+              <TimelineSeparator>
+                <TimelineDot>
+                  <FitnessCenterIcon />
+                </TimelineDot>
+                <TimelineConnector />
+              </TimelineSeparator>
+              <TimelineContent sx={{ py: "12px", px: 2 }}>
+                {editMode ? (
+                  <EditTrackerItem setEditMode={setEditMode} />
+                ) : (
+                  <TrackerItem
+                    weight={measurements[index]["weight"]}
+                    date={dateFormater(measurements[index]["date"])}
+                    setEditMode={setEditMode}
+                    setOpenDeleteModal={setOpenDeleteModal}
+                  />
+                )}
+              </TimelineContent>
+            </TimelineItem>
+          ))
+        ) : (
+          <div />
+        )}
 
-            {/* <Typography variant="h6" component="span">
-              Eat
-            </Typography>
-            <Typography>Because you need strength</Typography> */}
-          </TimelineContent>
-        </TimelineItem>
-        <TimelineItem>
-          <TimelineOppositeContent
-            sx={{ m: "auto 0" }}
-            variant="body2"
-            color="text.secondary"
-          >
-            10:00 am
-          </TimelineOppositeContent>
-          <TimelineSeparator>
-            <TimelineConnector />
-            <TimelineDot color="primary">
-              <LaptopMacIcon />
-            </TimelineDot>
-            <TimelineConnector />
-          </TimelineSeparator>
-          <TimelineContent sx={{ py: "12px", px: 2 }}>
-            <Typography variant="h6" component="span">
-              Code
-            </Typography>
-            <Typography>Because it&apos;s awesome!</Typography>
-          </TimelineContent>
-        </TimelineItem>
-        <TimelineItem>
-          <TimelineSeparator>
-            <TimelineConnector />
-            <TimelineDot color="primary" variant="outlined">
-              <HotelIcon />
-            </TimelineDot>
-            <TimelineConnector sx={{ bgcolor: "secondary.main" }} />
-          </TimelineSeparator>
-          <TimelineContent sx={{ py: "12px", px: 2 }}>
-            <Typography variant="h6" component="span">
-              Sleep
-            </Typography>
-            <Typography>Because you need rest</Typography>
-          </TimelineContent>
-        </TimelineItem>
-        <TimelineItem>
-          <TimelineSeparator>
-            <TimelineConnector sx={{ bgcolor: "secondary.main" }} />
-            <TimelineDot color="secondary">
-              <RepeatIcon />
-            </TimelineDot>
-            <TimelineConnector />
-          </TimelineSeparator>
-          <TimelineContent sx={{ py: "12px", px: 2 }}>
-            <Typography variant="h6" component="span">
-              Repeat
-            </Typography>
-            <Typography>Because this is the life you love!</Typography>
-          </TimelineContent>
-        </TimelineItem>
         <Button
           onClick={handleAddNewClick}
           variant="contained"

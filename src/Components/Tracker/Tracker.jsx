@@ -15,30 +15,23 @@ import useFetchier from "../../hooks/Fetcher";
 
 const Tracker = (props) => {
   /* eslint-disable no-unused-vars */
-  const [selectedData, setSelectedData] = useState(1);
   const [trackerData, loadingTrackerData, reFetchTrackerData, setTrackerData] =
-    useFetchier(getTrackerData.bind(null, selectedData), true);
+    useFetchier(getTrackerData);
 
   const [openModal, setOpenModal] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [userDeatils, setUserDetails] = useState(null);
+  const [measurements, setMeasurements] = useState(null);
 
   const handleAddNewClick = (e, data) => {
     setOpenModal(true);
   };
 
   useEffect(() => {
-    if (selectedData) {
-      reFetchTrackerData();
-    } else {
-      setTrackerData(null);
-    }
-  }, [selectedData]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  useEffect(() => {
     if (trackerData) {
       setUserDetails(trackerData);
+      setMeasurements(trackerData.measurements);
     }
   }, [trackerData]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -56,7 +49,10 @@ const Tracker = (props) => {
               xs={8}
               display={{ lg: "block", md: "block", sm: "block", xs: "block" }}
             >
-              <TrackerForm userDeatils={userDeatils} />
+              <TrackerForm
+                userDeatils={userDeatils}
+                measurements={measurements}
+              />
             </Box>
             <Grid
               component={Box}
