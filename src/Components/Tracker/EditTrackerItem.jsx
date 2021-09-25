@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -15,12 +15,38 @@ import FormControl from "@mui/material/FormControl";
 import TextField from "@mui/material/TextField";
 import DateTimePicker from "@mui/lab/DateTimePicker";
 
-const TrackerItem = ({ setEditMode, date }) => {
+const TrackerItem = ({ setEditMode, date, weight, saveUpdateMeasurement }) => {
   // milliseconds = date.getTime();
-  const [value, setValue] = useState(new Date(date));
+  const initObj = {
+    date: new Date(),
+    weight: "",
+  };
 
-  const handleChange = (newValue) => {
-    setValue(newValue);
+  const [updateMeasurement, setUpdateMeasurement] = useState(initObj);
+
+  useEffect(() => {
+    if (date && weight) {
+      setUpdateMeasurement({
+        date: new Date(date),
+        weight: parseInt(weight),
+      });
+    }
+  }, [date, weight]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const handleChangeDate = (newValue) => {
+    setUpdateMeasurement({ date: newValue });
+  };
+
+  const handleOnChange = ({ target }) => {
+    setUpdateMeasurement({ weight: target.value });
+  };
+
+  const onSaveClick = () => {
+    const repackForSend = {
+      ...updateMeasurement,
+      date: updateMeasurement.date._d.getTime(),
+    };
+    saveUpdateMeasurement(repackForSend);
   };
 
   return (
@@ -31,29 +57,26 @@ const TrackerItem = ({ setEditMode, date }) => {
           component="form"
           autoComplete="off"
         >
-          <FormControl sx={{ m: 1 }} variant="outlined" size="small" required>
-            <InputLabel htmlFor="outlined-adornment-weight">weight</InputLabel>
+          <FormControl sx={{ m: 1 }} variant="outlined" size="small">
             <OutlinedInput
-              id="outlined-adornment-password"
+              id="outlined-adornment-weight"
               type={"number"}
+              value={updateMeasurement.weight}
+              onChange={handleOnChange}
               endAdornment={
                 <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    edge="end"
-                  >
+                  <IconButton aria-label="weight" edge="end">
                     kg
                   </IconButton>
                 </InputAdornment>
               }
-              label="Password"
             />
           </FormControl>
           <FormControl sx={{ m: 1 }} variant="outlined" size="small">
             <DateTimePicker
               label="Select Date and Time"
-              value={value}
-              onChange={handleChange}
+              value={updateMeasurement.date}
+              onChange={handleChangeDate}
               renderInput={(params) => <TextField {...params} />}
             />
           </FormControl>
@@ -70,7 +93,7 @@ const TrackerItem = ({ setEditMode, date }) => {
             Cancel
           </Button>
           <Button
-            onClick={() => setEditMode(false)}
+            onClick={onSaveClick}
             variant="contained"
             color="primary"
             startIcon={<CheckIcon />}

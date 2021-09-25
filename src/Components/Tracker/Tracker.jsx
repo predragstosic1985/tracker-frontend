@@ -35,6 +35,17 @@ const Tracker = (props) => {
     }
   }, [trackerData]); // eslint-disable-line react-hooks/exhaustive-deps
 
+  const saveUpdateMeasurement = (newValues) => {
+    // updateMeasurement(userDeatils.docID, newValues);
+
+    const foundIndex = measurements.findIndex((x) => x.date == newValues.date);
+    const replacedValues = (measurements[foundIndex] = newValues);
+    console.log(replacedValues);
+    console.log(measurements);
+    console.log(newValues);
+    console.log("userDeatils.docID", userDeatils.docID);
+  };
+
   return (
     <>
       <Layout
@@ -52,6 +63,7 @@ const Tracker = (props) => {
               <TrackerForm
                 userDeatils={userDeatils}
                 measurements={measurements}
+                saveUpdateMeasurement={saveUpdateMeasurement}
               />
             </Box>
             <Grid

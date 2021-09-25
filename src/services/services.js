@@ -6,3 +6,8 @@ export const getTrackerData = async () => {
   const data = await axios.get(`${baseLink}/tracker/read`);
   return data;
 };
+
+export const updateMeasurement = async (id) => {
+  const data = await axios.get(`${baseLink}/tracker/update/${id}`);
+  return data;
+};
