@@ -26,7 +26,7 @@ const TrackerForm = ({ userDeatils }) => {
   };
 
   return (
-    <Timeline position="alternate">
+    <Timeline position="alternate" sx={{ bgcolor: "#f5f5f5" }}>
       <Typography variant="h6" component="span" align="center">
         Welcome {userDeatils ? userDeatils.firstName : ""}
       </Typography>

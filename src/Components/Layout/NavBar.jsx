@@ -6,7 +6,8 @@ import { CustomHeader } from "../../StyledComponents/AppBar.styled";
 import { StyledIconButton } from "../../StyledComponents/Button.styled";
 import { StyledTypography } from "../../StyledComponents/Typography.styled";
 
-const Header = (props) => {
+const NavBar = (props) => {
+  const history = useHistory();
   const configuration = {
     mainBackground: "#b51783",
     button: {
@@ -25,16 +26,10 @@ const Header = (props) => {
     },
   };
 
-  const history = useHistory();
-
   const logutUser = () => {
     localStorage.clear();
     history.push("/login");
   };
-
-  // const handleNavigate = () => {
-  //   history.push("/dashboard");
-  // };
 
   return (
     <CustomHeader configuration={configuration}>
@@ -61,28 +56,4 @@ const Header = (props) => {
     </CustomHeader>
   );
 };
-export default Header;
-
-// import React from "react";
-// import AppBar from "@mui/material/AppBar";
-// import Toolbar from "@mui/material/Toolbar";
-// import Typography from "@mui/material/Typography";
-
-// const NavBar = (props) => {
-//   return (
-//     <AppBar color="secondary">
-//       <Toolbar>
-//         <Typography
-//           variant="h6"
-//           component="div"
-//           sx={{
-//             color: "white",
-//           }}
-//         >
-//           Tracker app
-//         </Typography>
-//       </Toolbar>
-//     </AppBar>
-//   );
-// };
-// export default NavBar;
+export default NavBar;

@@ -46,18 +46,30 @@ const Tracker = (props) => {
     <>
       <Layout
         content={
-          <Box sx={{ flexGrow: 1 }}>
-            <Grid container spacing={1}>
-              <Grid item xs={8} sx={{ border: "1px solid #73c2fb" }}>
-                <TrackerForm userDeatils={userDeatils} />
-              </Grid>
-              <Grid item xs={4} sx={{ border: "1px solid #73c2fb" }}>
-                <TrackerUser userDeatils={userDeatils} />
-              </Grid>
+          <Grid container spacing={1} direction="row">
+            <Box
+              component={Grid}
+              item
+              lg={8}
+              md={8}
+              sm={8}
+              xs={8}
+              display={{ lg: "block", md: "block", sm: "block", xs: "block" }}
+            >
+              <TrackerForm userDeatils={userDeatils} />
+            </Box>
+            <Grid
+              component={Box}
+              item
+              lg={4}
+              md={4}
+              sm={4}
+              xs={4}
+              display={{ lg: "block", md: "block", sm: "block", xs: "none" }}
+            >
+              <TrackerUser userDeatils={userDeatils} />
             </Grid>
-            {/* <StepperComponent />
-          <ChartComponent /> */}
-          </Box>
+          </Grid>
         }
       />
       <CreateModal openModal={openModal} setOpenModal={setOpenModal} />
