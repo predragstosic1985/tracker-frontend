@@ -15,9 +15,16 @@ import FormControl from "@mui/material/FormControl";
 import TextField from "@mui/material/TextField";
 import DateTimePicker from "@mui/lab/DateTimePicker";
 
-const TrackerItem = ({ setEditMode, date, weight, saveUpdateMeasurement }) => {
+const TrackerItem = ({
+  setEditMode,
+  date,
+  weight,
+  saveUpdateMeasurement,
+  index,
+}) => {
   // milliseconds = date.getTime();
   const initObj = {
+    id: "",
     date: new Date(),
     weight: "",
   };
@@ -27,24 +34,26 @@ const TrackerItem = ({ setEditMode, date, weight, saveUpdateMeasurement }) => {
   useEffect(() => {
     if (date && weight) {
       setUpdateMeasurement({
+        id: index,
         date: new Date(date),
-        weight: parseInt(weight),
+        weight: parseFloat(weight).toFixed(2),
       });
     }
-  }, [date, weight]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [date, weight, index]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const handleChangeDate = (newValue) => {
-    setUpdateMeasurement({ date: newValue });
+  const handleChangeDate = (newDate) => {
+    setUpdateMeasurement({ ...updateMeasurement, date: newDate._d });
   };
 
   const handleOnChange = ({ target }) => {
-    setUpdateMeasurement({ weight: target.value });
+    setUpdateMeasurement({ ...updateMeasurement, weight: target.value });
   };
 
   const onSaveClick = () => {
     const repackForSend = {
       ...updateMeasurement,
-      date: updateMeasurement.date._d.getTime(),
+      date: updateMeasurement.date.getTime(),
+      weight: parseFloat(updateMeasurement.weight).toFixed(2),
     };
     saveUpdateMeasurement(repackForSend);
   };

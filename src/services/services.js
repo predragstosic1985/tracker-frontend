@@ -7,7 +7,10 @@ export const getTrackerData = async () => {
   return data;
 };
 
-export const updateMeasurement = async (id) => {
-  const data = await axios.get(`${baseLink}/tracker/update/${id}`);
+export const updateMeasurement = async (id, updatedValues) => {
+  const data = await axios.put(
+    `${baseLink}/tracker/update/${id}`,
+    updatedValues
+  );
   return data;
 };

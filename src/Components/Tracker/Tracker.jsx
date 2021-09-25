@@ -6,7 +6,7 @@ import TrackerForm from "./TrackerForm";
 import TrackerUser from "./TrackerUser";
 import DeleteModal from "../Modals/DeleteModal";
 import Layout from "../Layout/Layout";
-import { getTrackerData } from "../../services/services";
+import { getTrackerData, updateMeasurement } from "../../services/services";
 import useFetchier from "../../hooks/Fetcher";
 // import TrackerItem from "./TrackerItem";
 // import EditTrackerItem from "./EditTrackerItem";
@@ -35,15 +35,19 @@ const Tracker = (props) => {
     }
   }, [trackerData]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const saveUpdateMeasurement = (newValues) => {
-    // updateMeasurement(userDeatils.docID, newValues);
-
-    const foundIndex = measurements.findIndex((x) => x.date == newValues.date);
-    const replacedValues = (measurements[foundIndex] = newValues);
-    console.log(replacedValues);
-    console.log(measurements);
-    console.log(newValues);
-    console.log("userDeatils.docID", userDeatils.docID);
+  const saveUpdateMeasurement = async (newValues) => {
+    measurements[newValues.id] = newValues;
+    try {
+      const response = await updateMeasurement(userDeatils.docID, userDeatils);
+      if (response) {
+        console.log(response);
+      }
+    } catch (e) {
+      console.error(e);
+    } finally {
+      reFetchTrackerData();
+      setEditMode(false);
+    }
   };
 
   return (
@@ -64,6 +68,8 @@ const Tracker = (props) => {
                 userDeatils={userDeatils}
                 measurements={measurements}
                 saveUpdateMeasurement={saveUpdateMeasurement}
+                setEditMode={setEditMode}
+                editMode={editMode}
               />
             </Box>
             <Grid

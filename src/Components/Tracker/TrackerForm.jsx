@@ -14,11 +14,17 @@ import TrackerItem from "./TrackerItem";
 import EditTrackerItem from "./EditTrackerItem";
 import moment from "moment";
 
-const TrackerForm = ({ userDeatils, measurements, saveUpdateMeasurement }) => {
+const TrackerForm = ({
+  userDeatils,
+  measurements,
+  saveUpdateMeasurement,
+  setEditMode,
+  editMode,
+}) => {
   /* eslint-disable no-unused-vars */
   const [openModal, setOpenModal] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
-  const [editMode, setEditMode] = useState(false);
+
   const handleAddNewClick = (e, data) => {
     setOpenModal(true);
   };
@@ -91,6 +97,7 @@ const TrackerForm = ({ userDeatils, measurements, saveUpdateMeasurement }) => {
                     date={measurements[index]["date"]}
                     weight={measurements[index]["weight"]}
                     saveUpdateMeasurement={saveUpdateMeasurement}
+                    index={index}
                   />
                 ) : (
                   <TrackerItem
