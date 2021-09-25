@@ -9,7 +9,6 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import OutlinedInput from "@mui/material/OutlinedInput";
-import InputLabel from "@mui/material/InputLabel";
 import InputAdornment from "@mui/material/InputAdornment";
 import FormControl from "@mui/material/FormControl";
 import TextField from "@mui/material/TextField";
@@ -66,7 +65,7 @@ const TrackerItem = ({
           component="form"
           autoComplete="off"
         >
-          <FormControl sx={{ m: 1 }} variant="outlined" size="small">
+          <FormControl sx={{ m: 1 }} variant="outlined" size="small" fullWidth>
             <OutlinedInput
               id="outlined-adornment-weight"
               type={"number"}
@@ -81,7 +80,7 @@ const TrackerItem = ({
               }
             />
           </FormControl>
-          <FormControl sx={{ m: 1 }} variant="outlined" size="small">
+          <FormControl sx={{ m: 1 }} variant="outlined" size="small" fullWidth>
             <DateTimePicker
               label="Select Date and Time"
               value={updateMeasurement.date}

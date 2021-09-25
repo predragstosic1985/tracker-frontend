@@ -22,6 +22,7 @@ const TrackerForm = ({
   editMode,
 }) => {
   /* eslint-disable no-unused-vars */
+  const [selectedItem, setSelectedItem] = useState(null);
   const [openModal, setOpenModal] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
 
@@ -67,6 +68,11 @@ const TrackerForm = ({
     return dateFormated;
   };
 
+  const handleEditMode = (id) => {
+    setSelectedItem(id);
+    setEditMode(true);
+  };
+
   return (
     <>
       <Timeline position="alternate" sx={{ bgcolor: "#f5f5f5" }}>
@@ -91,7 +97,7 @@ const TrackerForm = ({
                 <TimelineConnector />
               </TimelineSeparator>
               <TimelineContent sx={{ py: "12px", px: 2 }}>
-                {editMode ? (
+                {editMode && selectedItem === index ? (
                   <EditTrackerItem
                     setEditMode={setEditMode}
                     date={measurements[index]["date"]}
@@ -103,8 +109,9 @@ const TrackerForm = ({
                   <TrackerItem
                     weight={measurements[index]["weight"]}
                     date={dateFormater(measurements[index]["date"])}
-                    setEditMode={setEditMode}
+                    handleEditMode={handleEditMode}
                     setOpenDeleteModal={setOpenDeleteModal}
+                    index={index}
                   />
                 )}
               </TimelineContent>
