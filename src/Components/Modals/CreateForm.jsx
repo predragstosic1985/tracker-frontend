@@ -30,7 +30,7 @@ const CreateForm = ({ setOpenModal }) => {
       component="form"
       autoComplete="off"
     >
-      <FormControl fullWidth sx={{ m: 1 }} variant="outlined">
+      <FormControl sx={{ m: 1 }} variant="outlined">
         <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
         <OutlinedInput
           id="outlined-adornment-password"
@@ -45,7 +45,7 @@ const CreateForm = ({ setOpenModal }) => {
           label="Password"
         />
       </FormControl>
-      <FormControl fullWidth sx={{ m: 1 }} variant="outlined">
+      <FormControl sx={{ m: 1 }} variant="outlined">
         <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
         <OutlinedInput
           id="outlined-adornment-password"

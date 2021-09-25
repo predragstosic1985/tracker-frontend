@@ -6,7 +6,6 @@ import CardContent from "@mui/material/CardContent";
 import IconButton from "@mui/material/IconButton";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import ButtonGroup from "@mui/material/ButtonGroup";
 
 const TrackerItem = ({ setEditMode, setOpenDeleteModal }) => {
   return (
@@ -24,18 +23,16 @@ const TrackerItem = ({ setEditMode, setOpenDeleteModal }) => {
         </Typography>
       </CardContent>
       <CardActions>
-        <ButtonGroup sx={{ float: "right", marginLeft: "auto" }}>
-          <IconButton aria-label="edit" onClick={() => setEditMode(true)}>
-            <EditIcon />
-          </IconButton>
-          <IconButton
-            color="error"
-            aria-label="delete"
-            onClick={() => setOpenDeleteModal(true)}
-          >
-            <DeleteOutlineIcon />
-          </IconButton>
-        </ButtonGroup>
+        <IconButton aria-label="edit" onClick={() => setEditMode(true)}>
+          <EditIcon />
+        </IconButton>
+        <IconButton
+          color="error"
+          aria-label="delete"
+          onClick={() => setOpenDeleteModal(true)}
+        >
+          <DeleteOutlineIcon />
+        </IconButton>
       </CardActions>
     </Card>
   );

@@ -1,10 +1,11 @@
 import React from "react";
 import AppRouter from "./Components/AppRouter/AppRouter";
-import { ThemeProvider } from "@mui/material/styles";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
-import theme from "./theme";
+// import theme from "./theme";
 
 const App = () => {
+  const theme = createTheme();
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />

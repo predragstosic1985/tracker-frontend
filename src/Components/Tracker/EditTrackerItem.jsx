@@ -24,7 +24,7 @@ const TrackerItem = ({ setEditMode }) => {
           component="form"
           autoComplete="off"
         >
-          <FormControl fullWidth sx={{ m: 1 }} variant="outlined" size="small">
+          <FormControl sx={{ m: 1 }} variant="outlined" size="small">
             <InputLabel htmlFor="outlined-adornment-password">
               Password
             </InputLabel>

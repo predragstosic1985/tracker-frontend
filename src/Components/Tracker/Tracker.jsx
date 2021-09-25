@@ -1,165 +1,71 @@
-import React, { useState } from "react";
-import Timeline from "@mui/lab/Timeline";
-import TimelineItem from "@mui/lab/TimelineItem";
-import TimelineSeparator from "@mui/lab/TimelineSeparator";
-import TimelineConnector from "@mui/lab/TimelineConnector";
-import TimelineContent from "@mui/lab/TimelineContent";
-import TimelineOppositeContent from "@mui/lab/TimelineOppositeContent";
-import TimelineDot from "@mui/lab/TimelineDot";
-import FastfoodIcon from "@mui/icons-material/Fastfood";
-import LaptopMacIcon from "@mui/icons-material/LaptopMac";
-import HotelIcon from "@mui/icons-material/Hotel";
-import RepeatIcon from "@mui/icons-material/Repeat";
-import Typography from "@mui/material/Typography";
-import AddIcon from "@mui/icons-material/Add";
-import Button from "@mui/material/Button";
+import React, { useState, useEffect } from "react";
 import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
 import CreateModal from "../Modals/CreateModal";
-import TrackerItem from "./TrackerItem";
-import EditTrackerItem from "./EditTrackerItem";
+import TrackerForm from "./TrackerForm";
+import TrackerUser from "./TrackerUser";
 import DeleteModal from "../Modals/DeleteModal";
-import { getData } from "../../services/services";
+import Layout from "../Layout/Layout";
+import { getTrackerData } from "../../services/services";
+import useFetchier from "../../hooks/Fetcher";
+// import TrackerItem from "./TrackerItem";
+// import EditTrackerItem from "./EditTrackerItem";
+// import ChartComponent from "../Chart/ChartComponent";
+// import StepperComponent from "../Stepper/StepperComponent";
 
 const Tracker = (props) => {
+  /* eslint-disable no-unused-vars */
+  const [selectedData, setSelectedData] = useState(1);
+  const [trackerData, loadingTrackerData, reFetchTrackerData, setTrackerData] =
+    useFetchier(getTrackerData.bind(null, selectedData), true);
+
   const [openModal, setOpenModal] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [editMode, setEditMode] = useState(false);
+  const [userDeatils, setUserDetails] = useState(null);
+
   const handleAddNewClick = (e, data) => {
-    console.log("hit", e, data);
     setOpenModal(true);
   };
-  const initFetch = async () => {
-    try {
-      const response = getData();
-      if (response) {
-        console.log(response);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  initFetch();
-  return (
-    <Grid
-      container
-      spacing={2}
-      xs={16}
-      sx={{
-        border: "1px solid #73c2fb",
-        width: "60rem",
-        marginRight: "auto",
-        marginLeft: "auto",
-        marginTop: "5rem",
-      }}
-    >
-      <Timeline position="alternate">
-        <Typography variant="h6" component="span" align="center">
-          Check your latest
-        </Typography>
-        <TimelineItem>
-          <TimelineOppositeContent
-            sx={{ m: "auto 0" }}
-            align="right"
-            variant="body2"
-            color="text.secondary"
-          >
-            9:30 am
-          </TimelineOppositeContent>
-          <TimelineSeparator>
-            <TimelineDot>
-              <FastfoodIcon />
-            </TimelineDot>
-            <TimelineConnector />
-          </TimelineSeparator>
-          <TimelineContent sx={{ py: "12px", px: 2 }}>
-            {editMode ? (
-              <EditTrackerItem setEditMode={setEditMode} />
-            ) : (
-              <TrackerItem
-                setEditMode={setEditMode}
-                setOpenDeleteModal={setOpenDeleteModal}
-              />
-            )}
 
-            {/* <Typography variant="h6" component="span">
-              Eat
-            </Typography>
-            <Typography>Because you need strength</Typography> */}
-          </TimelineContent>
-        </TimelineItem>
-        <TimelineItem>
-          <TimelineOppositeContent
-            sx={{ m: "auto 0" }}
-            variant="body2"
-            color="text.secondary"
-          >
-            10:00 am
-          </TimelineOppositeContent>
-          <TimelineSeparator>
-            <TimelineConnector />
-            <TimelineDot color="primary">
-              <LaptopMacIcon />
-            </TimelineDot>
-            <TimelineConnector />
-          </TimelineSeparator>
-          <TimelineContent sx={{ py: "12px", px: 2 }}>
-            <Typography variant="h6" component="span">
-              Code
-            </Typography>
-            <Typography>Because it&apos;s awesome!</Typography>
-          </TimelineContent>
-        </TimelineItem>
-        <TimelineItem>
-          <TimelineSeparator>
-            <TimelineConnector />
-            <TimelineDot color="primary" variant="outlined">
-              <HotelIcon />
-            </TimelineDot>
-            <TimelineConnector sx={{ bgcolor: "secondary.main" }} />
-          </TimelineSeparator>
-          <TimelineContent sx={{ py: "12px", px: 2 }}>
-            <Typography variant="h6" component="span">
-              Sleep
-            </Typography>
-            <Typography>Because you need rest</Typography>
-          </TimelineContent>
-        </TimelineItem>
-        <TimelineItem>
-          <TimelineSeparator>
-            <TimelineConnector sx={{ bgcolor: "secondary.main" }} />
-            <TimelineDot color="secondary">
-              <RepeatIcon />
-            </TimelineDot>
-            <TimelineConnector />
-          </TimelineSeparator>
-          <TimelineContent sx={{ py: "12px", px: 2 }}>
-            <Typography variant="h6" component="span">
-              Repeat
-            </Typography>
-            <Typography>Because this is the life you love!</Typography>
-          </TimelineContent>
-        </TimelineItem>
-        <Button
-          onClick={handleAddNewClick}
-          variant="contained"
-          startIcon={<AddIcon />}
-          disabled={editMode}
-          sx={{
-            width: "8rem",
-            marginLeft: "auto",
-            marginRight: "auto",
-            marginTop: "1rem",
-          }}
-        >
-          Add new
-        </Button>
-      </Timeline>
+  useEffect(() => {
+    if (selectedData) {
+      reFetchTrackerData();
+    } else {
+      setTrackerData(null);
+    }
+  }, [selectedData]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    if (trackerData) {
+      setUserDetails(trackerData);
+    }
+  }, [trackerData]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  return (
+    <>
+      <Layout
+        content={
+          <Box sx={{ flexGrow: 1 }}>
+            <Grid container spacing={1}>
+              <Grid item xs={8} sx={{ border: "1px solid #73c2fb" }}>
+                <TrackerForm userDeatils={userDeatils} />
+              </Grid>
+              <Grid item xs={4} sx={{ border: "1px solid #73c2fb" }}>
+                <TrackerUser userDeatils={userDeatils} />
+              </Grid>
+            </Grid>
+            {/* <StepperComponent />
+          <ChartComponent /> */}
+          </Box>
+        }
+      />
       <CreateModal openModal={openModal} setOpenModal={setOpenModal} />
       <DeleteModal
         openDeleteModal={openDeleteModal}
         setOpenDeleteModal={setOpenDeleteModal}
       />
-    </Grid>
+    </>
   );
 };
 export default Tracker;
