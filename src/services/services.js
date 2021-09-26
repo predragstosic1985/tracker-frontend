@@ -27,6 +27,19 @@ export const updateMeasurementData = async (id, updatedValues, token) => {
   return data;
 };
 
+export const updateUserData = async (id, updatedUser, token) => {
+  const data = await axios.put(
+    `${baseLink}/tracker/update/${id}`,
+    updatedUser,
+    {
+      headers: {
+        Authorization: token,
+      },
+    }
+  );
+  return data;
+};
+
 export const loginUser = async (user) => {
   const data = await axios.post(`${baseLink}/login`, user);
   return data;

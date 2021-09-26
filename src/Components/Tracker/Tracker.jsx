@@ -15,11 +15,6 @@ import useFetchier from "../../hooks/Fetcher";
 import { sortBy } from "lodash";
 import { AuthContext } from "../Auth/AuthContext";
 
-// import TrackerItem from "./TrackerItem";
-// import EditTrackerItem from "./EditTrackerItem";
-// import ChartComponent from "../Chart/ChartComponent";
-// import StepperComponent from "../Stepper/StepperComponent";
-
 const Tracker = (props) => {
   const { authState } = useContext(AuthContext);
 
@@ -34,6 +29,7 @@ const Tracker = (props) => {
   const [miniLoader, setMiniLoader] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [editMode, setEditMode] = useState(false);
+  const [editUserMode, setEditUserMode] = useState(false);
   const [userDeatils, setUserDetails] = useState(null);
   const [measurements, setMeasurements] = useState(null);
 
@@ -123,7 +119,7 @@ const Tracker = (props) => {
               xs={8}
               display={{ lg: "block", md: "block", sm: "block", xs: "block" }}
             >
-              {loadingTrackerData ? (
+              {loadingTrackerData || editUserMode ? (
                 <Stack
                   spacing={1}
                   sx={{ margin: "auto" }}
@@ -168,6 +164,9 @@ const Tracker = (props) => {
                 userDeatils={userDeatils}
                 loadingTrackerData={loadingTrackerData}
                 setTrackerData={setTrackerData}
+                setEditUserMode={setEditUserMode}
+                editUserMode={editUserMode}
+                reFetchTrackerData={reFetchTrackerData}
               />
             </Grid>
           </Grid>

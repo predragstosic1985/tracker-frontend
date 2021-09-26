@@ -11,54 +11,57 @@ import ListItemText from "@mui/material/ListItemText";
 import Avatar from "@mui/material/Avatar";
 import Skeleton from "@mui/material/Skeleton";
 import Stack from "@mui/material/Stack";
+import TrackerUserEdit from "./TrackerUserEdit";
 
-const TrackerUser = ({ userDeatils, loadingTrackerData }) => {
+const TrackerUser = ({
+  userDeatils,
+  loadingTrackerData,
+  editUserMode,
+  setEditUserMode,
+  reFetchTrackerData,
+}) => {
   const fields = [
     {
-      fieldName: "Name",
+      fieldName: "First name",
       propName: "firstName",
-      inMainTable: true,
+      allowEdit: true,
       editable: true,
       inputType: "text",
       required: true,
     },
     {
-      fieldName: "Last Name",
+      fieldName: "Last name",
       propName: "lastName",
-      inMainTable: true,
+      allowEdit: true,
       editable: true,
       inputType: "text",
     },
     {
       fieldName: "Username",
       propName: "username",
-      inMainTable: true,
+      allowEdit: false,
       editable: true,
       inputType: "text",
     },
     {
       fieldName: "Email",
       propName: "email",
-      inMainTable: true,
-      editable: true,
-      inputType: "text",
-    },
-    {
-      fieldName: "Password",
-      propName: "password",
-      inMainTable: true,
+      allowEdit: false,
       editable: true,
       inputType: "text",
     },
   ];
 
   const Header = (props) => {
+    const handleEditUser = () => {
+      setEditUserMode(true);
+    };
     return (
       <Grid item xs={12} md={12}>
         <List>
           <ListItem
             secondaryAction={
-              <IconButton edge="end" aria-label="delete">
+              <IconButton edge="end" aria-label="edit" onClick={handleEditUser}>
                 <EditIcon />
               </IconButton>
             }
@@ -123,7 +126,7 @@ const TrackerUser = ({ userDeatils, loadingTrackerData }) => {
           }}
         >
           <Header />
-          {userDeatils ? (
+          {userDeatils && !editUserMode ? (
             fields.map(({ fieldName, propName }, index) => (
               <Box
                 key={index}
@@ -139,6 +142,16 @@ const TrackerUser = ({ userDeatils, loadingTrackerData }) => {
             ))
           ) : (
             <Box />
+          )}
+          {editUserMode ? (
+            <TrackerUserEdit
+              userDeatils={userDeatils}
+              fields={fields.filter(({ allowEdit }) => allowEdit)}
+              setEditUserMode={setEditUserMode}
+              reFetchTrackerData={reFetchTrackerData}
+            />
+          ) : (
+            <div />
           )}
         </Grid>
       )}

@@ -11,7 +11,7 @@ import Typography from "@mui/material/Typography";
 import AddIcon from "@mui/icons-material/Add";
 import Button from "@mui/material/Button";
 import TrackerItem from "./TrackerItem";
-import EditTrackerItem from "./EditTrackerItem";
+import TrackerItemEdit from "./TrackerItemEdit";
 import moment from "moment";
 
 const TrackerForm = ({
@@ -113,7 +113,7 @@ const TrackerForm = ({
               </TimelineSeparator>
               <TimelineContent sx={{ py: "12px", px: 2 }}>
                 {editMode && selectedItem === index ? (
-                  <EditTrackerItem
+                  <TrackerItemEdit
                     setEditMode={setEditMode}
                     date={measurements[index]["date"]}
                     weight={measurements[index]["weight"]}
