@@ -10,8 +10,12 @@ import Button from "@mui/material/Button";
 const DeleteModal = ({
   openDeleteModal,
   setOpenDeleteModal,
-  deleteUpdateMeasurement,
+  saveUpdateMeasurement,
 }) => {
+  const handleOnDeleteClick = () => {
+    setOpenDeleteModal(false);
+    saveUpdateMeasurement("delete");
+  };
   return (
     <Dialog open={openDeleteModal} aria-labelledby="draggable-dialog-title">
       <DialogContent>
@@ -28,7 +32,7 @@ const DeleteModal = ({
             No
           </Button>
           <Button
-            onClick={deleteUpdateMeasurement}
+            onClick={handleOnDeleteClick}
             variant="contained"
             color="primary"
             startIcon={<CheckIcon />}

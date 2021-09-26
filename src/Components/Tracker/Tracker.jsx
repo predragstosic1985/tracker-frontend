@@ -57,12 +57,34 @@ const Tracker = (props) => {
     setOpenDeleteModal(true);
   };
 
-  const saveUpdateMeasurement = async (newValues) => {
-    measurements[newValues.id] = newValues;
-    const prepare = {
-      ...userDeatils,
-      measurements: measurements,
-    };
+  const saveUpdateMeasurement = async (method, newValues) => {
+    let prepare;
+    switch (method) {
+      case "create":
+        measurements.push(newValues);
+        prepare = {
+          ...userDeatils,
+          measurements: measurements,
+        };
+        break;
+      case "update":
+        measurements[newValues.id] = newValues;
+        prepare = {
+          ...userDeatils,
+          measurements: measurements,
+        };
+        break;
+      case "delete":
+        measurements.splice(selectedItem, 1);
+        prepare = {
+          ...userDeatils,
+          measurements: measurements,
+        };
+        break;
+
+      default:
+        break;
+    }
     try {
       const response = await updateMeasurementData(
         userDeatils.docID,
@@ -78,54 +100,6 @@ const Tracker = (props) => {
       reFetchTrackerData();
       setEditMode(false);
       setMiniLoader(false);
-    }
-  };
-
-  const deleteUpdateMeasurement = async () => {
-    measurements.splice(selectedItem, 1);
-    const prepare = {
-      ...userDeatils,
-      measurements: measurements,
-    };
-    try {
-      const response = await updateMeasurementData(
-        userDeatils.docID,
-        prepare,
-        authState.token
-      );
-      if (response) {
-        console.log(response);
-      }
-    } catch (e) {
-      console.error(e);
-    } finally {
-      reFetchTrackerData();
-      setEditMode(false);
-      setOpenDeleteModal(false);
-    }
-  };
-
-  const createMeasurement = async (newValues) => {
-    measurements.push(newValues);
-    const prepare = {
-      ...userDeatils,
-      measurements: measurements,
-    };
-    try {
-      const response = await updateMeasurementData(
-        userDeatils.docID,
-        prepare,
-        authState.token
-      );
-      if (response) {
-        console.log(response);
-      }
-    } catch (e) {
-      console.error(e);
-    } finally {
-      reFetchTrackerData();
-      setEditMode(false);
-      setOpenModal(false);
     }
   };
 
@@ -193,6 +167,7 @@ const Tracker = (props) => {
               <TrackerUser
                 userDeatils={userDeatils}
                 loadingTrackerData={loadingTrackerData}
+                setTrackerData={setTrackerData}
               />
             </Grid>
           </Grid>
@@ -201,12 +176,12 @@ const Tracker = (props) => {
       <CreateModal
         openModal={openModal}
         setOpenModal={setOpenModal}
-        createMeasurement={createMeasurement}
+        saveUpdateMeasurement={saveUpdateMeasurement}
       />
       <DeleteModal
         openDeleteModal={openDeleteModal}
         setOpenDeleteModal={setOpenDeleteModal}
-        deleteUpdateMeasurement={deleteUpdateMeasurement}
+        saveUpdateMeasurement={saveUpdateMeasurement}
       />
     </>
   );

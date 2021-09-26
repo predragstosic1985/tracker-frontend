@@ -83,7 +83,7 @@ const TrackerItem = ({
       date: updateMeasurement.date.getTime(),
       weight: parseFloat(updateMeasurement.weight).toFixed(2),
     };
-    saveUpdateMeasurement(repackForSend);
+    saveUpdateMeasurement("update", repackForSend);
   };
 
   return (

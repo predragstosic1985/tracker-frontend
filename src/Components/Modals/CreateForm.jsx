@@ -15,7 +15,7 @@ import TextField from "@mui/material/TextField";
 import DateTimePicker from "@mui/lab/DateTimePicker";
 import { isEmpty } from "lodash";
 
-const CreateForm = ({ setOpenModal, createMeasurement }) => {
+const CreateForm = ({ setOpenModal, saveUpdateMeasurement }) => {
   const initObj = {
     id: "",
     date: new Date(),
@@ -54,7 +54,7 @@ const CreateForm = ({ setOpenModal, createMeasurement }) => {
       date: newMeasurement.date.getTime(),
       weight: parseFloat(newMeasurement.weight).toFixed(2),
     };
-    createMeasurement(repackForSend);
+    saveUpdateMeasurement("create", repackForSend);
     setOpenModal(false);
   };
 
