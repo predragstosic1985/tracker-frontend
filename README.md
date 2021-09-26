@@ -26,6 +26,15 @@ https://github.com/predragstosic1985/tracker-backend
 
 Reproduce the same steps from previous like for frontend setup
 
-Change base link path in Frontend application (React app) file proxy.json relative path src\proxy.json to
+Change base link path in Frontend application (React app) file src\services
+from
+const baseLink = "https://backend-tracker.herokuapp.com/api";
+to
+const baseLink = "http://localhost:5000/api";
 
-http://localhost:5000/
+## Running tests
+
+run
+npm test
+To check the coverage just open the index file in the coverage folder
+(path src\coverage\lcov-report\index.html).
