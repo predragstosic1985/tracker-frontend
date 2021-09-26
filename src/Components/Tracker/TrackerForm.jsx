@@ -28,26 +28,6 @@ const TrackerForm = ({
   selectedItem,
   handleAddNewClick,
 }) => {
-  /* eslint-disable no-unused-vars */
-
-  const fields = [
-    {
-      fieldName: "weight",
-      propName: "weight",
-      inMainTable: true,
-      editable: true,
-      inputType: "text",
-      required: true,
-    },
-    {
-      fieldName: "date",
-      propName: "date",
-      inMainTable: true,
-      editable: true,
-      inputType: "text",
-    },
-  ];
-
   // format time
   const timeFormater = (dateToFormat) => {
     let dateFormated = "";

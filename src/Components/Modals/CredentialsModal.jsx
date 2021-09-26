@@ -15,6 +15,7 @@ const style = {
   p: 4,
 };
 const CredentialsModal = ({ openModal, setOpenModal }) => {
+  // info modal in with credentials for login in
   const handleClose = () => setOpenModal(false);
 
   return (

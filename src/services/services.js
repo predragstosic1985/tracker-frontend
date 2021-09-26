@@ -6,6 +6,7 @@ const baseLink = "https://backend-tracker.herokuapp.com/api";
 // TODO deafult options header
 // const defaultOptions = {};
 
+// get user
 export const getTrackerData = async (token) => {
   const data = await axios.get(`${baseLink}/tracker/read`, {
     headers: {
@@ -15,6 +16,7 @@ export const getTrackerData = async (token) => {
   return data;
 };
 
+// update one measurement
 export const updateMeasurementData = async (id, updatedValues, token) => {
   const data = await axios.put(
     `${baseLink}/tracker/update/${id}`,
@@ -28,6 +30,7 @@ export const updateMeasurementData = async (id, updatedValues, token) => {
   return data;
 };
 
+// update user
 export const updateUserData = async (id, updatedUser, token) => {
   const data = await axios.put(
     `${baseLink}/tracker/update/${id}`,
@@ -41,6 +44,7 @@ export const updateUserData = async (id, updatedUser, token) => {
   return data;
 };
 
+// login
 export const loginUser = async (user) => {
   const data = await axios.post(`${baseLink}/login`, user);
   return data;

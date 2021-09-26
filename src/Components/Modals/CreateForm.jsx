@@ -16,6 +16,7 @@ import DateTimePicker from "@mui/lab/DateTimePicker";
 import { isEmpty } from "lodash";
 
 const CreateForm = ({ setOpenModal, saveUpdateMeasurement }) => {
+  // modal for adding new measurement
   const initObj = {
     id: "",
     date: new Date(),

@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import useIsMounted from "./isMounted";
 
+// ccustom hook for get request eventually returns data-pure data, loader boolean,
+// re-fetch function to trigger new get request and set state if needed
 function useFetchier(fetchFn, fetchOnQ = false, withoutLoadingOnMount = false) {
   const setStateIfMounted = useIsMounted();
   const [shouldFetch, setShouldFetch] = useState(!fetchOnQ);

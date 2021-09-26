@@ -7,6 +7,7 @@ import ScrollTop from "./ScrollTop";
 import { StyledFab } from "../../StyledComponents/Button.styled";
 
 const Layout = (props) => {
+  // Layout with an action button that can be reused
   const { content } = props;
   const configuration = {
     button: {

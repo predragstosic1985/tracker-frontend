@@ -4,6 +4,7 @@ import { AuthContext } from "../Auth/AuthContext";
 import LoginPage from "../Login/LoginPage";
 
 const ProtectedRoute = ({ component: Component, ...rest }) => {
+  // protected route
   // calling authState for token check
   const { authState } = useContext(AuthContext);
 
