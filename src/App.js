@@ -4,6 +4,7 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import DateAdapter from "@mui/lab/AdapterMoment";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
+import { AuthContextProvider } from "./Components/Auth/AuthContext";
 
 const App = () => {
   const theme = createTheme();
@@ -11,7 +12,9 @@ const App = () => {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <LocalizationProvider dateAdapter={DateAdapter}>
-        <AppRouter />
+        <AuthContextProvider>
+          <AppRouter />
+        </AuthContextProvider>
       </LocalizationProvider>
     </ThemeProvider>
   );

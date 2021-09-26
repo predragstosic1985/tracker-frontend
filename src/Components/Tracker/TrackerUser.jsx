@@ -37,6 +37,13 @@ const TrackerUser = ({ userDeatils, loadingTrackerData }) => {
       inputType: "text",
     },
     {
+      fieldName: "Email",
+      propName: "email",
+      inMainTable: true,
+      editable: true,
+      inputType: "text",
+    },
+    {
       fieldName: "Password",
       propName: "password",
       inMainTable: true,

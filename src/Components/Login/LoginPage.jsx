@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Link from "@mui/material/Link";
@@ -7,8 +7,6 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
-import Backdrop from "@mui/material/Backdrop";
-import CircularProgress from "@mui/material/CircularProgress";
 import IconButton from "@mui/material/IconButton";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputLabel from "@mui/material/InputLabel";
@@ -17,9 +15,12 @@ import FormControl from "@mui/material/FormControl";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
+import CredentialsModal from "../Modals/CredentialsModal";
 import imageSrc from "../Assets/pic1.png";
-import { isEmpty } from "lodash";
+import { isEmpty, isEqual } from "lodash";
+import { loginUser } from "../../services/services";
 import { useHistory } from "react-router-dom";
+import { AuthContext } from "../Auth/AuthContext";
 
 const Copyright = (props) => {
   return (
@@ -45,16 +46,20 @@ const Copyright = (props) => {
 };
 
 const LoginPage = () => {
-  /* eslint-disable no-unused-vars */
+  const { dispatch } = useContext(AuthContext);
+  const authorized = {
+    email: "user@auth.com",
+    password: "user1234",
+  };
   const history = useHistory();
   const initState = {
-    username: "",
+    email: "",
     password: "",
   };
   const [inputsError, setInputsError] = useState({});
   const [user, setUser] = useState(initState);
-  const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
     const errors = { ...inputsError };
@@ -75,18 +80,7 @@ const LoginPage = () => {
     setUser({ ...user, [name]: value });
   };
 
-  //   const handleSubmit = event => {
-  //     event.preventDefault();
-  //     const data = new FormData(event.currentTarget);
-  //     // eslint-disable-next-line no-console
-  //     console.log({
-  //       email: data.get('email'),
-  //       password: data.get('password')
-  //     });
-  //   };
-
   const onSubmit = async () => {
-    setIsLoading(true);
     const errors = {};
     Object.keys(user).forEach((propName) => {
       if (isEmpty(user[propName])) {
@@ -95,55 +89,33 @@ const LoginPage = () => {
     });
     if (!isEmpty(errors)) {
       setInputsError(errors);
-      setIsLoading(false);
-      return;
+    } else if (!isEqual(user, authorized)) {
+      setOpenModal(true);
+    } else {
+      postUser();
     }
-
-    // try {
-    //   const res = await API.login({
-    //     username: user.username,
-    //     password: user.password
-    //   });
-
-    //   if (res.status == 200) {
-    //     if (res.data.message == 'Failed') alert('Wrong Credentials');
-    //     else submitUser(res.data.user);
-    //   }
-    //   setIsLoading(false);
-    // } catch {
-    //   setIsLoading(false);
-    //   console.log('error catch');
-    // }
-
-    // const errors = {};
-    // Object.keys(user).forEach(propName => {
-    //   if (isEmpty(user[propName])) {
-    //     errors[propName] = { content: 'Please add a value' };
-    //   }
-    // });
-    // if (!isEqual(user, authorized)) {
-    //   console.log('check your data');
-    // }
-    // if (isEmpty(errors) && isEqual(user, authorized)) {
-    //   submitUser(user);
-    //   setIsLoading(false);
-    // } else {
-    //   setInputsError(errors);
-    //   setIsLoading(false);
-    // }
   };
 
-  // const submitUser = (user) => {
-  //   localStorage.setItem("user", JSON.stringify(user));
-  //   localStorage.setItem("isLogin", JSON.stringify(true));
-  //   history.push("/dashboard");
-  // };
+  const postUser = async () => {
+    try {
+      const response = await loginUser(user);
+
+      if (response) {
+        history.push("/tracker");
+        dispatch({
+          type: "set",
+          token: response.data.token,
+          refreshToken: response.data.refreshToken,
+          email: response.data.email,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <Grid container component="main" sx={{ height: "100vh" }}>
-      <Backdrop open={isLoading}>
-        <CircularProgress color="secondary" />
-      </Backdrop>
       <Grid
         item
         xs={false}
@@ -184,16 +156,16 @@ const LoginPage = () => {
               required
               sx={{ marginBottom: "1rem" }}
             >
-              <InputLabel htmlFor="username">Username</InputLabel>
+              <InputLabel htmlFor="email">Email</InputLabel>
               <OutlinedInput
                 autoComplete="off"
-                id="username"
-                name="username"
+                id="email"
+                name="email"
                 type={"text"}
-                label="Username"
+                label="Email"
                 onChange={handleOnChange}
-                error={!!inputsError.username}
-                value={user.username}
+                error={!!inputsError.email}
+                value={user.email}
                 endAdornment={
                   <InputAdornment position="end">
                     <PersonOutlineIcon />
@@ -237,6 +209,7 @@ const LoginPage = () => {
           </Box>
         </Box>
       </Grid>
+      <CredentialsModal openModal={openModal} setOpenModal={setOpenModal} />
     </Grid>
   );
 };

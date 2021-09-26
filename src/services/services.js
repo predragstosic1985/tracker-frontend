@@ -14,3 +14,8 @@ export const updateMeasurement = async (id, updatedValues) => {
   );
   return data;
 };
+
+export const loginUser = async (user) => {
+  const data = await axios.post(`${baseLink}/login`, user);
+  return data;
+};
