@@ -20,6 +20,7 @@ const TrackerUser = ({
   editUserMode,
   setEditUserMode,
   reFetchTrackerData,
+  editMode,
 }) => {
   const Header = (props) => {
     const handleEditUser = () => {
@@ -34,7 +35,7 @@ const TrackerUser = ({
                 edge="end"
                 aria-label="edit"
                 onClick={handleEditUser}
-                disabled={editUserMode}
+                disabled={editUserMode || editMode}
               >
                 <EditIcon />
               </IconButton>

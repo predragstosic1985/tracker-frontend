@@ -88,12 +88,11 @@ const Tracker = (props) => {
         authState.token
       );
       if (response) {
-        console.log(response);
+        reFetchTrackerData();
       }
     } catch (e) {
       console.error(e);
     } finally {
-      reFetchTrackerData();
       setEditMode(false);
       setMiniLoader(false);
     }
@@ -166,6 +165,7 @@ const Tracker = (props) => {
                 setTrackerData={setTrackerData}
                 setEditUserMode={setEditUserMode}
                 editUserMode={editUserMode}
+                editMode={editMode}
                 reFetchTrackerData={reFetchTrackerData}
               />
             </Grid>
