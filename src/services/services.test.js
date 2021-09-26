@@ -1,10 +1,10 @@
 import axios from "axios";
-import { getTrackerData, updateMeasurement, loginUser } from "./services";
+import { getTrackerData, updateMeasurementData } from "./services";
 
 jest.mock("axios");
 
 const baseLink = "http://localhost:5000/api";
-const fakeToken = undefined;
+const fakeToken = 12345;
 
 describe("services", () => {
   beforeEach(() => {
@@ -19,10 +19,14 @@ describe("services", () => {
     };
     mockedAxios.mockReturnValue(Promise.resolve(resp));
 
-    const result = await getTrackerData();
+    const result = await getTrackerData(fakeToken);
 
     expect.assertions(3);
-    expect(axios.get).toHaveBeenCalledWith(`${baseLink}/tracker/read`);
+    expect(axios.get).toHaveBeenCalledWith(`${baseLink}/tracker/read`, {
+      headers: {
+        Authorization: fakeToken,
+      },
+    });
     expect(axios.get).toHaveBeenCalledTimes(1);
     expect(result).toBe(resp);
   });
@@ -42,12 +46,17 @@ describe("services", () => {
     };
     mockedAxios.mockReturnValue(Promise.resolve(resp));
 
-    const result = updateMeasurement(user.id, updated);
+    const result = updateMeasurementData(user.id, updated, fakeToken);
 
     expect.assertions(3);
     expect(axios.put).toHaveBeenCalledWith(
       `${baseLink}/tracker/update/${user.id}`,
-      updated
+      updated,
+      {
+        headers: {
+          Authorization: fakeToken,
+        },
+      }
     );
     expect(axios.put).toHaveBeenCalledTimes(1);
     expect(result).toEqual(resp.data);

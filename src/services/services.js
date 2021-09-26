@@ -2,15 +2,27 @@ import axios from "axios";
 
 const baseLink = "http://localhost:5000/api";
 
-export const getTrackerData = async () => {
-  const data = await axios.get(`${baseLink}/tracker/read`);
+// TODO deafult options header
+// const defaultOptions = {};
+
+export const getTrackerData = async (token) => {
+  const data = await axios.get(`${baseLink}/tracker/read`, {
+    headers: {
+      Authorization: token,
+    },
+  });
   return data;
 };
 
-export const updateMeasurement = async (id, updatedValues) => {
+export const updateMeasurementData = async (id, updatedValues, token) => {
   const data = await axios.put(
     `${baseLink}/tracker/update/${id}`,
-    updatedValues
+    updatedValues,
+    {
+      headers: {
+        Authorization: token,
+      },
+    }
   );
   return data;
 };

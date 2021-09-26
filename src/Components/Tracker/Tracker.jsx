@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Skeleton from "@mui/material/Skeleton";
@@ -10,9 +10,10 @@ import TrackerForm from "./TrackerForm";
 import TrackerUser from "./TrackerUser";
 import DeleteModal from "../Modals/DeleteModal";
 import Layout from "../Layout/Layout";
-import { getTrackerData, updateMeasurement } from "../../services/services";
+import { getTrackerData, updateMeasurementData } from "../../services/services";
 import useFetchier from "../../hooks/Fetcher";
 import { sortBy } from "lodash";
+import { AuthContext } from "../Auth/AuthContext";
 
 // import TrackerItem from "./TrackerItem";
 // import EditTrackerItem from "./EditTrackerItem";
@@ -20,9 +21,13 @@ import { sortBy } from "lodash";
 // import StepperComponent from "../Stepper/StepperComponent";
 
 const Tracker = (props) => {
-  /* eslint-disable no-unused-vars */
+  const { authState } = useContext(AuthContext);
+
   const [trackerData, loadingTrackerData, reFetchTrackerData, setTrackerData] =
-    useFetchier(getTrackerData);
+    useFetchier(
+      getTrackerData.bind(null, authState.token ? authState.token : null),
+      false
+    );
 
   const [openModal, setOpenModal] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
@@ -59,7 +64,11 @@ const Tracker = (props) => {
       measurements: measurements,
     };
     try {
-      const response = await updateMeasurement(userDeatils.docID, prepare);
+      const response = await updateMeasurementData(
+        userDeatils.docID,
+        prepare,
+        authState.token
+      );
       if (response) {
         console.log(response);
       }
@@ -79,7 +88,11 @@ const Tracker = (props) => {
       measurements: measurements,
     };
     try {
-      const response = await updateMeasurement(userDeatils.docID, prepare);
+      const response = await updateMeasurementData(
+        userDeatils.docID,
+        prepare,
+        authState.token
+      );
       if (response) {
         console.log(response);
       }
@@ -99,7 +112,11 @@ const Tracker = (props) => {
       measurements: measurements,
     };
     try {
-      const response = await updateMeasurement(userDeatils.docID, prepare);
+      const response = await updateMeasurementData(
+        userDeatils.docID,
+        prepare,
+        authState.token
+      );
       if (response) {
         console.log(response);
       }
