@@ -31,16 +31,26 @@ const Copyright = (props) => {
       {...props}
     >
       {"Copyright ©PredragStosic "}
+      <br />
       <Link
         color="inherit"
         href="https://github.com/predragstosic1985/tracker-frontend"
         target="_blank"
         rel="noopener noreferrer"
       >
-        Github repo
+        Github repo frontend
+      </Link>
+      <br />
+      <Link
+        color="inherit"
+        href="https://github.com/predragstosic1985/tracker-backend"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Github repo backend
       </Link>{" "}
+      <br />
       {new Date().getFullYear()}
-      {"."}
     </Typography>
   );
 };
