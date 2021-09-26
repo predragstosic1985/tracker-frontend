@@ -3,7 +3,8 @@ import { getTrackerData, updateMeasurementData } from "./services";
 
 jest.mock("axios");
 
-const baseLink = "http://localhost:5000/api";
+// const baseLink = "http://localhost:5000/api";
+const baseLink = "https://backend-tracker.herokuapp.com/api";
 const fakeToken = 12345;
 
 describe("services", () => {
