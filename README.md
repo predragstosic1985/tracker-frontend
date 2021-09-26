@@ -37,4 +37,9 @@ const baseLink = "http://localhost:5000/api";
 run
 npm test
 To check the coverage just open the index file in the coverage folder
-(path src\coverage\lcov-report\index.html).
+auto generated on running tests
+path src\coverage\lcov-report\index.html
+
+## Technical documentation
+
+For more information about project structure please read technical documentation (not part of the repository).
