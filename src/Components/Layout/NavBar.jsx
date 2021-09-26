@@ -1,23 +1,63 @@
-import React from "react";
-import AppBar from "@mui/material/AppBar";
+import React, { useContext } from "react";
 import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
+import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
+import { useHistory } from "react-router-dom";
+import { CustomHeader } from "../../StyledComponents/AppBar.styled";
+import { StyledIconButton } from "../../StyledComponents/Button.styled";
+import { StyledTypography } from "../../StyledComponents/Typography.styled";
+import { AuthContext } from "../Auth/AuthContext";
 
 const NavBar = (props) => {
+  const { dispatch } = useContext(AuthContext);
+  const history = useHistory();
+  const configuration = {
+    mainBackground: "#b51783",
+    button: {
+      btnBackground: "#0067df",
+      fontColor: "#F6F6F6",
+      fontFamily: "Roboto",
+    },
+    typography: {
+      fontColor: "#F6F6F6",
+      fontFamily: "Roboto",
+    },
+    header: {
+      background: "#009fdf",
+      fontColor: "#F6F6F6",
+      fontFamily: "Roboto",
+    },
+  };
+
+  const logutUser = () => {
+    history.push("/");
+    dispatch({
+      type: "del",
+    });
+  };
+
   return (
-    <AppBar color="secondary">
+    <CustomHeader configuration={configuration}>
       <Toolbar>
-        <Typography
+        <StyledTypography
+          configuration={configuration}
           variant="h6"
-          component="div"
-          sx={{
-            color: "white",
-          }}
+          sx={{ flexGrow: 1, marginLeft: "1rem" }}
         >
-          Tracker app
-        </Typography>
+          Tracker
+        </StyledTypography>
+        <StyledIconButton
+          configuration={configuration}
+          onClick={logutUser}
+          size="large"
+          edge="start"
+          color="inherit"
+          aria-label="menu"
+          sx={{ mr: 2 }}
+        >
+          <PowerSettingsNewIcon />
+        </StyledIconButton>
       </Toolbar>
-    </AppBar>
+    </CustomHeader>
   );
 };
 export default NavBar;

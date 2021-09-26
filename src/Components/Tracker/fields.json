@@ -1,0 +1,31 @@
+[
+    {
+        "fieldName": "First name",
+        "propName": "firstName",
+        "allowEdit": true,
+        "editable": true,
+        "inputType": "text",
+        "required": true
+    },
+    {
+        "fieldName": "Last name",
+        "propName": "lastName",
+        "allowEdit": true,
+        "editable": true,
+        "inputType": "text"
+    },
+    {
+        "fieldName": "Username",
+        "propName": "username",
+        "allowEdit": false,
+        "editable": true,
+        "inputType": "text"
+    },
+    {
+        "fieldName": "Email",
+        "propName": "email",
+        "allowEdit": false,
+        "editable": true,
+        "inputType": "text"
+    }
+]

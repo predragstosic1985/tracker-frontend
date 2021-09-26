@@ -1,14 +1,21 @@
 import React from "react";
 import AppRouter from "./Components/AppRouter/AppRouter";
-import { ThemeProvider } from "@mui/material/styles";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
-import theme from "./theme";
+import DateAdapter from "@mui/lab/AdapterMoment";
+import LocalizationProvider from "@mui/lab/LocalizationProvider";
+import { AuthContextProvider } from "./Components/Auth/AuthContext";
 
 const App = () => {
+  const theme = createTheme();
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <AppRouter />
+      <LocalizationProvider dateAdapter={DateAdapter}>
+        <AuthContextProvider>
+          <AppRouter />
+        </AuthContextProvider>
+      </LocalizationProvider>
     </ThemeProvider>
   );
 };

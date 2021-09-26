@@ -1,153 +1,188 @@
-import React, { useState } from "react";
-import Timeline from "@mui/lab/Timeline";
-import TimelineItem from "@mui/lab/TimelineItem";
-import TimelineSeparator from "@mui/lab/TimelineSeparator";
-import TimelineConnector from "@mui/lab/TimelineConnector";
-import TimelineContent from "@mui/lab/TimelineContent";
-import TimelineOppositeContent from "@mui/lab/TimelineOppositeContent";
-import TimelineDot from "@mui/lab/TimelineDot";
-import FastfoodIcon from "@mui/icons-material/Fastfood";
-import LaptopMacIcon from "@mui/icons-material/LaptopMac";
-import HotelIcon from "@mui/icons-material/Hotel";
-import RepeatIcon from "@mui/icons-material/Repeat";
-import Typography from "@mui/material/Typography";
-import AddIcon from "@mui/icons-material/Add";
-import Button from "@mui/material/Button";
+import React, { useState, useEffect, useContext } from "react";
 import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import Skeleton from "@mui/material/Skeleton";
+import Stack from "@mui/material/Stack";
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
 import CreateModal from "../Modals/CreateModal";
-import TrackerItem from "./TrackerItem";
-import EditTrackerItem from "./EditTrackerItem";
+import TrackerForm from "./TrackerForm";
+import TrackerUser from "./TrackerUser";
 import DeleteModal from "../Modals/DeleteModal";
+import Layout from "../Layout/Layout";
+import { getTrackerData, updateMeasurementData } from "../../services/services";
+import useFetchier from "../../hooks/Fetcher";
+import { sortBy } from "lodash";
+import { AuthContext } from "../Auth/AuthContext";
 
 const Tracker = (props) => {
+  const { authState } = useContext(AuthContext);
+
+  const [trackerData, loadingTrackerData, reFetchTrackerData, setTrackerData] =
+    useFetchier(
+      getTrackerData.bind(null, authState.token ? authState.token : null),
+      false
+    );
+
   const [openModal, setOpenModal] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [miniLoader, setMiniLoader] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [editMode, setEditMode] = useState(false);
+  const [editUserMode, setEditUserMode] = useState(false);
+  const [userDeatils, setUserDetails] = useState(null);
+  const [measurements, setMeasurements] = useState(null);
+
   const handleAddNewClick = (e, data) => {
-    console.log("hit", e, data);
     setOpenModal(true);
   };
-  return (
-    <Grid
-      container
-      spacing={2}
-      xs={16}
-      sx={{
-        border: "1px solid #73c2fb",
-        width: "60rem",
-        marginRight: "auto",
-        marginLeft: "auto",
-        marginTop: "5rem",
-      }}
-    >
-      <Timeline position="alternate">
-        <Typography variant="h6" component="span" align="center">
-          Check your latest
-        </Typography>
-        <TimelineItem>
-          <TimelineOppositeContent
-            sx={{ m: "auto 0" }}
-            align="right"
-            variant="body2"
-            color="text.secondary"
-          >
-            9:30 am
-          </TimelineOppositeContent>
-          <TimelineSeparator>
-            <TimelineDot>
-              <FastfoodIcon />
-            </TimelineDot>
-            <TimelineConnector />
-          </TimelineSeparator>
-          <TimelineContent sx={{ py: "12px", px: 2 }}>
-            {editMode ? (
-              <EditTrackerItem setEditMode={setEditMode} />
-            ) : (
-              <TrackerItem
-                setEditMode={setEditMode}
-                setOpenDeleteModal={setOpenDeleteModal}
-              />
-            )}
 
-            {/* <Typography variant="h6" component="span">
-              Eat
-            </Typography>
-            <Typography>Because you need strength</Typography> */}
-          </TimelineContent>
-        </TimelineItem>
-        <TimelineItem>
-          <TimelineOppositeContent
-            sx={{ m: "auto 0" }}
-            variant="body2"
-            color="text.secondary"
-          >
-            10:00 am
-          </TimelineOppositeContent>
-          <TimelineSeparator>
-            <TimelineConnector />
-            <TimelineDot color="primary">
-              <LaptopMacIcon />
-            </TimelineDot>
-            <TimelineConnector />
-          </TimelineSeparator>
-          <TimelineContent sx={{ py: "12px", px: 2 }}>
-            <Typography variant="h6" component="span">
-              Code
-            </Typography>
-            <Typography>Because it&apos;s awesome!</Typography>
-          </TimelineContent>
-        </TimelineItem>
-        <TimelineItem>
-          <TimelineSeparator>
-            <TimelineConnector />
-            <TimelineDot color="primary" variant="outlined">
-              <HotelIcon />
-            </TimelineDot>
-            <TimelineConnector sx={{ bgcolor: "secondary.main" }} />
-          </TimelineSeparator>
-          <TimelineContent sx={{ py: "12px", px: 2 }}>
-            <Typography variant="h6" component="span">
-              Sleep
-            </Typography>
-            <Typography>Because you need rest</Typography>
-          </TimelineContent>
-        </TimelineItem>
-        <TimelineItem>
-          <TimelineSeparator>
-            <TimelineConnector sx={{ bgcolor: "secondary.main" }} />
-            <TimelineDot color="secondary">
-              <RepeatIcon />
-            </TimelineDot>
-            <TimelineConnector />
-          </TimelineSeparator>
-          <TimelineContent sx={{ py: "12px", px: 2 }}>
-            <Typography variant="h6" component="span">
-              Repeat
-            </Typography>
-            <Typography>Because this is the life you love!</Typography>
-          </TimelineContent>
-        </TimelineItem>
-        <Button
-          onClick={handleAddNewClick}
-          variant="contained"
-          startIcon={<AddIcon />}
-          disabled={editMode}
-          sx={{
-            width: "8rem",
-            marginLeft: "auto",
-            marginRight: "auto",
-            marginTop: "1rem",
-          }}
-        >
-          Add new
-        </Button>
-      </Timeline>
-      <CreateModal openModal={openModal} setOpenModal={setOpenModal} />
+  useEffect(() => {
+    if (trackerData) {
+      setUserDetails(trackerData);
+
+      const sortedData = sortBy(trackerData.measurements, function (dateObj) {
+        return new Date(dateObj.date);
+      }).reverse();
+      setMeasurements(sortedData);
+    }
+  }, [trackerData]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const handleDelteClick = (id) => {
+    setSelectedItem(id);
+    setOpenDeleteModal(true);
+  };
+
+  const saveUpdateMeasurement = async (method, newValues) => {
+    let prepare;
+    switch (method) {
+      case "create":
+        measurements.push(newValues);
+        prepare = {
+          ...userDeatils,
+          measurements: measurements,
+        };
+        break;
+      case "update":
+        measurements[newValues.id] = newValues;
+        prepare = {
+          ...userDeatils,
+          measurements: measurements,
+        };
+        break;
+      case "delete":
+        measurements.splice(selectedItem, 1);
+        prepare = {
+          ...userDeatils,
+          measurements: measurements,
+        };
+        break;
+
+      default:
+        break;
+    }
+    try {
+      const response = await updateMeasurementData(
+        userDeatils.docID,
+        prepare,
+        authState.token
+      );
+      if (response) {
+        reFetchTrackerData();
+      }
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setEditMode(false);
+      setMiniLoader(false);
+    }
+  };
+
+  return (
+    <>
+      <Layout
+        content={
+          <Grid container spacing={1} direction="row">
+            <Backdrop
+              sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+              open={loadingTrackerData}
+            >
+              <CircularProgress color="inherit" />
+            </Backdrop>
+            <Box
+              component={Grid}
+              item
+              lg={8}
+              md={8}
+              sm={8}
+              xs={8}
+              display={{ lg: "block", md: "block", sm: "block", xs: "block" }}
+            >
+              {loadingTrackerData || editUserMode ? (
+                <Stack
+                  spacing={1}
+                  sx={{ margin: "auto" }}
+                  height={"70vh"}
+                  width={"50vw"}
+                >
+                  <Skeleton variant="text" />
+                  <Skeleton variant="circular" width={40} height={40} />
+                  <Skeleton
+                    variant="rectangular"
+                    height={"70vh"}
+                    width={"50vw"}
+                  />
+                </Stack>
+              ) : (
+                <TrackerForm
+                  userDeatils={userDeatils}
+                  measurements={measurements}
+                  saveUpdateMeasurement={saveUpdateMeasurement}
+                  setEditMode={setEditMode}
+                  editMode={editMode}
+                  miniLoader={miniLoader}
+                  setMiniLoader={setMiniLoader}
+                  setOpenDeleteModal={setOpenDeleteModal}
+                  handleDelteClick={handleDelteClick}
+                  setSelectedItem={setSelectedItem}
+                  selectedItem={selectedItem}
+                  handleAddNewClick={handleAddNewClick}
+                />
+              )}
+            </Box>
+            <Grid
+              component={Box}
+              item
+              lg={4}
+              md={4}
+              sm={4}
+              xs={4}
+              display={{ lg: "block", md: "block", sm: "none", xs: "none" }}
+            >
+              <TrackerUser
+                userDeatils={userDeatils}
+                loadingTrackerData={loadingTrackerData}
+                setTrackerData={setTrackerData}
+                setEditUserMode={setEditUserMode}
+                editUserMode={editUserMode}
+                editMode={editMode}
+                reFetchTrackerData={reFetchTrackerData}
+              />
+            </Grid>
+          </Grid>
+        }
+      />
+      <CreateModal
+        openModal={openModal}
+        setOpenModal={setOpenModal}
+        saveUpdateMeasurement={saveUpdateMeasurement}
+      />
       <DeleteModal
         openDeleteModal={openDeleteModal}
         setOpenDeleteModal={setOpenDeleteModal}
+        saveUpdateMeasurement={saveUpdateMeasurement}
       />
-    </Grid>
+    </>
   );
 };
 export default Tracker;

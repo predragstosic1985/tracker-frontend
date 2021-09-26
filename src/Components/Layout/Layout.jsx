@@ -1,34 +1,44 @@
 import React from "react";
 import NavBar from "./NavBar";
 import Toolbar from "@mui/material/Toolbar";
-import Box from "@mui/material/Box";
-import Container from "@mui/material/Container";
-import Fab from "@mui/material/Fab";
+import Grid from "@mui/material/Grid";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import ScrollTop from "./ScrollTop";
-import Footer from "./Footer";
-import Tracker from "../Tracker/Tracker";
-import ChartComponent from "../Chart/ChartComponent";
-import StepperComponent from "../Stepper/StepperComponent";
+import { StyledFab } from "../../StyledComponents/Button.styled";
 
 const Layout = (props) => {
+  const { content } = props;
+  const configuration = {
+    button: {
+      btnBackground: "#0067df",
+      fontColor: "#F6F6F6",
+      fontFamily: "Roboto",
+    },
+  };
   return (
     <>
       <NavBar />
       <Toolbar id="back-to-top-anchor" />
-
-      <Container>
-        <Box sx={{ my: 2 }}>
-          <Tracker />
-          {/* <StepperComponent />
-          <ChartComponent /> */}
-        </Box>
-      </Container>
-      <Footer />
+      <Grid
+        container
+        sx={{
+          marginTop: "3rem",
+          marginLeft: "2rem",
+          marginRight: "15rem",
+          width: "97vw",
+          height: "100vh",
+        }}
+      >
+        {content}
+      </Grid>
       <ScrollTop {...props}>
-        <Fab color="secondary" size="small" aria-label="scroll back to top">
+        <StyledFab
+          configuration={configuration}
+          size="small"
+          aria-label="scroll back to top"
+        >
           <KeyboardArrowUpIcon />
-        </Fab>
+        </StyledFab>
       </ScrollTop>
     </>
   );

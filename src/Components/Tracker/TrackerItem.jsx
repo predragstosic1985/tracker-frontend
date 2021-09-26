@@ -6,36 +6,37 @@ import CardContent from "@mui/material/CardContent";
 import IconButton from "@mui/material/IconButton";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import ButtonGroup from "@mui/material/ButtonGroup";
 
-const TrackerItem = ({ setEditMode, setOpenDeleteModal }) => {
+const TrackerItem = ({
+  handleEditMode,
+  weight,
+  date,
+  index,
+  handleDelteClick,
+}) => {
   return (
-    <Card>
+    <Card sx={{ height: "12rem" }}>
       <CardContent>
         <Typography variant="h6" component="span">
-          Eat
+          {weight}kg
         </Typography>
         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-          Word of the Day
-        </Typography>
-        <Typography variant="body2">
-          well meaning and kindly.
-          {'"a benevolent smile"'}
+          {date}
         </Typography>
       </CardContent>
       <CardActions>
-        <ButtonGroup sx={{ float: "right", marginLeft: "auto" }}>
-          <IconButton aria-label="edit" onClick={() => setEditMode(true)}>
+        <div style={{ float: "right", marginLeft: "auto", marginTop: "2rem" }}>
+          <IconButton aria-label="edit" onClick={() => handleEditMode(index)}>
             <EditIcon />
           </IconButton>
           <IconButton
             color="error"
             aria-label="delete"
-            onClick={() => setOpenDeleteModal(true)}
+            onClick={() => handleDelteClick(index)}
           >
             <DeleteOutlineIcon />
           </IconButton>
-        </ButtonGroup>
+        </div>
       </CardActions>
     </Card>
   );
