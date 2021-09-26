@@ -1,0 +1,15 @@
+@import "../../variables.scss";
+
+.buttonGroup {
+  margin-left: auto;
+  margin-bottom: 1rem;
+  float: right;
+}
+.saveButton {
+  color: $white !important;
+  background-color: $blue !important;
+}
+.cancelButton {
+  color: $white !important;
+  background-color: $yellow !important;
+}

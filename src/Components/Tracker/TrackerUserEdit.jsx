@@ -12,8 +12,9 @@ import ButtonGroup from "@mui/material/ButtonGroup";
 import { isEmpty } from "lodash";
 import { updateUserData } from "../../services/services";
 import { AuthContext } from "../Auth/AuthContext";
+import styles from "./TrackerUserEdit.module.scss";
 
-const EditTrackerUser = ({
+const TrackerUserEdit = ({
   reFetchTrackerData,
   setEditUserMode,
   userDeatils,
@@ -124,11 +125,11 @@ const EditTrackerUser = ({
         ) : (
           <Box />
         )}
-        <ButtonGroup sx={{ float: "right", marginLeft: "auto" }}>
+        <ButtonGroup className={styles.buttonGroup}>
           <Button
             onClick={handleClose}
-            color="warning"
             variant="contained"
+            className={styles.cancelButton}
             startIcon={<CancelIcon />}
           >
             Cancel
@@ -136,7 +137,7 @@ const EditTrackerUser = ({
           <Button
             onClick={onSubmit}
             variant="contained"
-            color="primary"
+            className={styles.saveButton}
             startIcon={<CheckIcon />}
           >
             Save
@@ -146,4 +147,4 @@ const EditTrackerUser = ({
     </>
   );
 };
-export default EditTrackerUser;
+export default TrackerUserEdit;

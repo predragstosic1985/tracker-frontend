@@ -12,6 +12,7 @@ import Avatar from "@mui/material/Avatar";
 import Skeleton from "@mui/material/Skeleton";
 import Stack from "@mui/material/Stack";
 import TrackerUserEdit from "./TrackerUserEdit";
+import fields from "./fields.json";
 
 const TrackerUser = ({
   userDeatils,
@@ -20,38 +21,6 @@ const TrackerUser = ({
   setEditUserMode,
   reFetchTrackerData,
 }) => {
-  const fields = [
-    {
-      fieldName: "First name",
-      propName: "firstName",
-      allowEdit: true,
-      editable: true,
-      inputType: "text",
-      required: true,
-    },
-    {
-      fieldName: "Last name",
-      propName: "lastName",
-      allowEdit: true,
-      editable: true,
-      inputType: "text",
-    },
-    {
-      fieldName: "Username",
-      propName: "username",
-      allowEdit: false,
-      editable: true,
-      inputType: "text",
-    },
-    {
-      fieldName: "Email",
-      propName: "email",
-      allowEdit: false,
-      editable: true,
-      inputType: "text",
-    },
-  ];
-
   const Header = (props) => {
     const handleEditUser = () => {
       setEditUserMode(true);
@@ -61,7 +30,12 @@ const TrackerUser = ({
         <List>
           <ListItem
             secondaryAction={
-              <IconButton edge="end" aria-label="edit" onClick={handleEditUser}>
+              <IconButton
+                edge="end"
+                aria-label="edit"
+                onClick={handleEditUser}
+                disabled={editUserMode}
+              >
                 <EditIcon />
               </IconButton>
             }

@@ -158,7 +158,7 @@ const Tracker = (props) => {
               md={4}
               sm={4}
               xs={4}
-              display={{ lg: "block", md: "block", sm: "block", xs: "none" }}
+              display={{ lg: "block", md: "block", sm: "none", xs: "none" }}
             >
               <TrackerUser
                 userDeatils={userDeatils}

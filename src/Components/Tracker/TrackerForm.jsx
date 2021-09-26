@@ -76,7 +76,12 @@ const TrackerForm = ({
   return (
     <>
       <Timeline position="alternate" sx={{ bgcolor: "#f5f5f5" }}>
-        <Typography variant="h6" component="span" align="center">
+        <Typography
+          variant="h6"
+          component="span"
+          align="center"
+          sx={{ marginTop: "1rem", fontStyle: "oblique" }}
+        >
           Welcome {userDeatils ? userDeatils.firstName : ""}
         </Typography>
         <Button
