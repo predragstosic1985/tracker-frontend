@@ -57,7 +57,9 @@ const TrackerItem = ({
   }, [date, weight, index]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleChangeDate = (newDate) => {
-    setUpdateMeasurement({ ...updateMeasurement, date: newDate._d });
+    if (newDate) {
+      setUpdateMeasurement({ ...updateMeasurement, date: newDate._d });
+    }
   };
 
   const handleOnChange = ({ target }) => {

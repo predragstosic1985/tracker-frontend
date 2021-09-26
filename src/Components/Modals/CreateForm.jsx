@@ -63,7 +63,9 @@ const CreateForm = ({ setOpenModal, saveUpdateMeasurement }) => {
   };
 
   const handleChangeDate = (newDate) => {
-    setNewMeasurement({ ...newMeasurement, date: newDate._d });
+    if (newDate) {
+      setNewMeasurement({ ...newMeasurement, date: newDate._d });
+    }
   };
 
   const handleOnChange = ({ target }) => {
