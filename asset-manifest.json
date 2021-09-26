@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.css": "/predragstosic1985/tracker-frontend/static/css/main.43c245ca.chunk.css",
-    "main.js": "/predragstosic1985/tracker-frontend/static/js/main.1d6b037b.chunk.js",
-    "main.js.map": "/predragstosic1985/tracker-frontend/static/js/main.1d6b037b.chunk.js.map",
-    "runtime-main.js": "/predragstosic1985/tracker-frontend/static/js/runtime-main.68655b8b.js",
-    "runtime-main.js.map": "/predragstosic1985/tracker-frontend/static/js/runtime-main.68655b8b.js.map",
-    "static/js/2.418e7e99.chunk.js": "/predragstosic1985/tracker-frontend/static/js/2.418e7e99.chunk.js",
-    "static/js/2.418e7e99.chunk.js.map": "/predragstosic1985/tracker-frontend/static/js/2.418e7e99.chunk.js.map",
-    "index.html": "/predragstosic1985/tracker-frontend/index.html",
-    "static/css/main.43c245ca.chunk.css.map": "/predragstosic1985/tracker-frontend/static/css/main.43c245ca.chunk.css.map",
-    "static/js/2.418e7e99.chunk.js.LICENSE.txt": "/predragstosic1985/tracker-frontend/static/js/2.418e7e99.chunk.js.LICENSE.txt",
-    "static/media/pic1.eaa224e8.png": "/predragstosic1985/tracker-frontend/static/media/pic1.eaa224e8.png"
+    "main.css": "/predragstosic1985.github.io/tracker-frontend/static/css/main.43c245ca.chunk.css",
+    "main.js": "/predragstosic1985.github.io/tracker-frontend/static/js/main.1d6b037b.chunk.js",
+    "main.js.map": "/predragstosic1985.github.io/tracker-frontend/static/js/main.1d6b037b.chunk.js.map",
+    "runtime-main.js": "/predragstosic1985.github.io/tracker-frontend/static/js/runtime-main.4e4260dd.js",
+    "runtime-main.js.map": "/predragstosic1985.github.io/tracker-frontend/static/js/runtime-main.4e4260dd.js.map",
+    "static/js/2.a76498ee.chunk.js": "/predragstosic1985.github.io/tracker-frontend/static/js/2.a76498ee.chunk.js",
+    "static/js/2.a76498ee.chunk.js.map": "/predragstosic1985.github.io/tracker-frontend/static/js/2.a76498ee.chunk.js.map",
+    "index.html": "/predragstosic1985.github.io/tracker-frontend/index.html",
+    "static/css/main.43c245ca.chunk.css.map": "/predragstosic1985.github.io/tracker-frontend/static/css/main.43c245ca.chunk.css.map",
+    "static/js/2.a76498ee.chunk.js.LICENSE.txt": "/predragstosic1985.github.io/tracker-frontend/static/js/2.a76498ee.chunk.js.LICENSE.txt",
+    "static/media/pic1.eaa224e8.png": "/predragstosic1985.github.io/tracker-frontend/static/media/pic1.eaa224e8.png"
   },
   "entrypoints": [
-    "static/js/runtime-main.68655b8b.js",
-    "static/js/2.418e7e99.chunk.js",
+    "static/js/runtime-main.4e4260dd.js",
+    "static/js/2.a76498ee.chunk.js",
     "static/css/main.43c245ca.chunk.css",
     "static/js/main.1d6b037b.chunk.js"
   ]
