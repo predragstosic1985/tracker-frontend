@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import Toolbar from "@mui/material/Toolbar";
 import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
 import { useHistory } from "react-router-dom";
 import { CustomHeader } from "../../StyledComponents/AppBar.styled";
 import { StyledIconButton } from "../../StyledComponents/Button.styled";
 import { StyledTypography } from "../../StyledComponents/Typography.styled";
+import { AuthContext } from "../Auth/AuthContext";
 
 const NavBar = (props) => {
+  const { dispatch } = useContext(AuthContext);
   const history = useHistory();
   const configuration = {
     mainBackground: "#b51783",
@@ -27,8 +29,10 @@ const NavBar = (props) => {
   };
 
   const logutUser = () => {
-    localStorage.clear();
-    history.push("/login");
+    history.push("/");
+    dispatch({
+      type: "del",
+    });
   };
 
   return (
