@@ -8,6 +8,7 @@ import { AuthContextProvider } from "./Components/Auth/AuthContext";
 
 const App = () => {
   const theme = createTheme();
+  console.log("test");
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
