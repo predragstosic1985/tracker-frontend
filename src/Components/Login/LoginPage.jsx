@@ -15,12 +15,15 @@ import FormControl from "@mui/material/FormControl";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
 import CredentialsModal from "../Modals/CredentialsModal";
 import imageSrc from "../Assets/pic1.png";
 import { isEmpty, isEqual } from "lodash";
 import { loginUser } from "../../services/services";
 import { useHistory } from "react-router-dom";
 import { AuthContext } from "../Auth/AuthContext";
+import useIsMounted from "../../hooks/isMounted";
 
 const Copyright = (props) => {
   return (
@@ -57,6 +60,7 @@ const Copyright = (props) => {
 
 const LoginPage = () => {
   const { dispatch } = useContext(AuthContext);
+  const setStateIfMounted = useIsMounted();
   const authorized = {
     email: "user@auth.com",
     password: "user1234",
@@ -70,6 +74,7 @@ const LoginPage = () => {
   const [user, setUser] = useState(initState);
   const [showPassword, setShowPassword] = useState(false);
   const [openModal, setOpenModal] = useState(false);
+  const [isLoading, setIsloading] = useState(false);
 
   useEffect(() => {
     const errors = { ...inputsError };
@@ -91,6 +96,7 @@ const LoginPage = () => {
   };
 
   const onSubmit = async () => {
+    setIsloading(true);
     const errors = {};
     Object.keys(user).forEach((propName) => {
       if (isEmpty(user[propName])) {
@@ -99,8 +105,10 @@ const LoginPage = () => {
     });
     if (!isEmpty(errors)) {
       setInputsError(errors);
+      setIsloading(false);
     } else if (!isEqual(user, authorized)) {
       setOpenModal(true);
+      setIsloading(false);
     } else {
       postUser();
     }
@@ -121,11 +129,16 @@ const LoginPage = () => {
       }
     } catch (error) {
       console.log(error);
+    } finally {
+      setStateIfMounted(setIsloading, false);
     }
   };
 
   return (
     <Grid container component="main" sx={{ height: "100vh" }}>
+      <Backdrop open={isLoading}>
+        <CircularProgress color="primary" />
+      </Backdrop>
       <Grid
         item
         xs={false}
@@ -143,6 +156,7 @@ const LoginPage = () => {
           backgroundPosition: "center",
         }}
       />
+
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
         <Box
           sx={{
@@ -154,7 +168,7 @@ const LoginPage = () => {
           }}
         >
           <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-            <LockOutlinedIcon />
+            <LockOutlinedIcon color={isLoading ? "disabled" : "inherit"} />
           </Avatar>
           <Typography component="h1" variant="h5">
             Sign in
@@ -212,6 +226,7 @@ const LoginPage = () => {
               onClick={onSubmit}
               fullWidth={true}
               sx={{ mt: 3, mb: 2 }}
+              disabled={isLoading}
             >
               Sign in
             </Button>
