@@ -75,7 +75,9 @@ const TrackerItem = ({
         }
       }
     });
-    isEmpty(errors) ? onSave(updateMeasurement) : setInputsError(errors);
+    isEmpty(errors) && !isNaN(updateMeasurement.date.getTime())
+      ? onSave(updateMeasurement)
+      : setInputsError(errors);
   };
 
   const onSave = () => {

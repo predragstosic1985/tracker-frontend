@@ -50,13 +50,15 @@ const CreateForm = ({ setOpenModal, saveUpdateMeasurement }) => {
   };
 
   const saveNewMeasurement = (e, data) => {
-    const repackForSend = {
-      ...newMeasurement,
-      date: newMeasurement.date.getTime(),
-      weight: parseFloat(newMeasurement.weight).toFixed(2),
-    };
-    saveUpdateMeasurement("create", repackForSend);
-    setOpenModal(false);
+    if (!isNaN(newMeasurement.date.getTime())) {
+      const repackForSend = {
+        ...newMeasurement,
+        date: newMeasurement.date.getTime(),
+        weight: parseFloat(newMeasurement.weight).toFixed(2),
+      };
+      saveUpdateMeasurement("create", repackForSend);
+      setOpenModal(false);
+    }
   };
 
   const handleClose = () => {
